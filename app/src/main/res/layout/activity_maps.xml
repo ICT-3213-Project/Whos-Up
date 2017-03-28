@@ -90,7 +90,7 @@ tools:context="lightning.structby.whosup.MainActivity">
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:layout_marginLeft="20dp"
-            android:text="Studnet"
+            android:text="Student"
             android:textSize="16sp"
             android:textColor="#000000" />
 
@@ -100,7 +100,7 @@ tools:context="lightning.structby.whosup.MainActivity">
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_marginLeft="20dp"
-            android:text="summer party"
+            android:text="Summer Party"
             android:textSize="14sp"
             android:textColor="#000000" />
 
