@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Who\'s Up</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="eventname">Summer Party</string>
+    <string name="eventgoing">57%</string>
+    <string name="eventdate">June 12 at 8 pm</string>
+    <string name="desc">Biggest party of the semester with DJ Snake and few more popular DJs at Deetee.</string>
 </resources>
