@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class eventDetails extends AppCompatActivity, GestureDetector.SimpleOnGestureListener {
+public class eventDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class eventDetails extends AppCompatActivity, GestureDetector.SimpleOnGes
     }
 
     public void openChat(View v){
-        Intent i = new Intent(this, chat.class);
+        Intent i = new Intent(this, ChatActivity.class);
         startActivity(i);
     }
 }
