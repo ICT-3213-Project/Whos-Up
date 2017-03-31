@@ -29,16 +29,11 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
-
-        </activity>
-
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".eventDetails"
-            android:label="Details">
-
-        </activity>
-
+            android:label="Details"></activity>
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

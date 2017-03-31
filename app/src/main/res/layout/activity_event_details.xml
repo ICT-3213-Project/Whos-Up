@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
     tools:context="lightning.structby.whosup.eventDetails">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,6 +113,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             android:layout_weight="8">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -162,7 +168,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view_inner"
                     android:layout_width="85dp"
@@ -255,27 +262,21 @@
                 </android.support.v7.widget.CardView>
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
-    <RelativeLayout
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/cardview_dark_background"
+        android:layout_alignParentBottom="true"
+        android:onClick="openChat">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom|end">
+            android:gravity="center"
+            android:text="CHAT"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"/>
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="lightning.structby.whosup.MainActivity" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/map_gradient">
-            </LinearLayout>
-
-        </RelativeLayout>
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

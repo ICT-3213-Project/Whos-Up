@@ -1,12 +1,14 @@
 package lightning.structby.whosup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.*;
+import android.view.GestureDetector;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,7 +21,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class eventDetails extends AppCompatActivity implements OnMapReadyCallback {
+public class eventDetails extends AppCompatActivity, GestureDetector.SimpleOnGestureListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +32,7 @@ public class eventDetails extends AppCompatActivity implements OnMapReadyCallbac
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
         TextView tv=(TextView)findViewById(R.id.timeicon);
         Typeface face=Typeface.createFromAsset(getAssets(),"fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
@@ -42,26 +42,6 @@ public class eventDetails extends AppCompatActivity implements OnMapReadyCallbac
         tv.setTypeface(face);
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = map.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_json));
-
-            if (!success) {
-                Log.e("E", "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e("E", "Can't find style. Error: ", e);
-        }
-        // Position the map's camera near Sydney, Australia.
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(-34, 151)));
-        map.setMaxZoomPreference(15);
-        map.setMinZoomPreference(15);
-    }
 
     public void back(View v){
         this.finish();
@@ -70,5 +50,10 @@ public class eventDetails extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void openChat(View v){
+        Intent i = new Intent(this, chat.class);
+        startActivity(i);
     }
 }
