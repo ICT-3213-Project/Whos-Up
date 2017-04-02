@@ -11,7 +11,7 @@ import static android.content.ContentValues.TAG;
  * Created by vinayak on 4/1/17.
  */
 
-public class Firebase extends FirebaseInstanceIdService {
+public class FirebaseInstance extends FirebaseInstanceIdService {
 
     @Override
     public void onTokenRefresh() {
@@ -20,8 +20,10 @@ public class Firebase extends FirebaseInstanceIdService {
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
         // TODO: Implement this method to send any registration to your app's servers.
-        sendRegistrationToServer(refreshedToken);
+        //sendRegistrationToServer(refreshedToken);
     }
+
+
 
 
 }

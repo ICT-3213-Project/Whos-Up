@@ -1,3 +1,21 @@
 <resources>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCNyiB4J8hDKCt1o5JQz2Gu6ImvU0eZUP0</string>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=F2:75:D0:63:46:90:E1:1A:7F:7F:70:69:86:F6:C6:84:1C:C9:4E:EF%3Blightning.structby.whosup
+
+    You can also add your credentials to an existing key, using this line:
+    F2:75:D0:63:46:90:E1:1A:7F:7F:70:69:86:F6:C6:84:1C:C9:4E:EF;lightning.structby.whosup
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyArgwb18bxNeCiCnQxwmgtd4Dg8LEdOGlg
+    </string>
 </resources>
