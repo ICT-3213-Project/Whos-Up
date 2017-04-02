@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,11 +23,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "SignUpActivity";
 
     EditText email;
     EditText password;
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        final ProgressDialog progressDialog = new ProgressDialog(SignUpActivity.this);
         progressDialog.setMessage("Creating Account");
         progressDialog.show();
 
@@ -133,11 +132,10 @@ public class MainActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SignUpActivity.this, R.string.auth_failed,Toast.LENGTH_SHORT).show();
 
                             progressDialog.dismiss();
-                            builder1.setTitle("Error.");
+                            builder1.setTitle("Error");
                             builder1.setMessage("Check your internet connection.");
                             builder1.setPositiveButton(android.R.string.ok,
                                     new DialogInterface.OnClickListener() {

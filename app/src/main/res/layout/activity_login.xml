@@ -10,4 +10,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lightning.structby.whosup.LoginActivity">
 
+    <TextView
+        android:text="Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/emailLogintextView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_below="@+id/emailLogintextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:id="@+id/emailLogineditText" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emailLogineditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/passwordLogintextView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/passwordLogintextView"
+        android:id="@+id/passwordLogineditText"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="33dp"
+        android:id="@+id/loginbutton"
+        android:onClick="login"/>
+
+    <TextView
+        android:text="SignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginbutton"
+        android:layout_marginBottom="66dp"
+        android:id="@+id/signuptextView"
+        android:layout_centerHorizontal="true"
+        android:onClick="openSignUp"/>
 </RelativeLayout>

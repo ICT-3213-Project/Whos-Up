@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="lightning.structby.whosup.MainActivity">
+    tools:context="lightning.structby.whosup.SignUpActivity">
 
     <TextView
         android:text="Email"
@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/emailtextView" />
+        android:id="@+id/emailLogintextView" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:id="@+id/emaileditText"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/emailtextView"
+        android:layout_below="@+id/emailLogintextView"
         android:layout_marginTop="16dp"/>
 
     <TextView
