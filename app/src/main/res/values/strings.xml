@@ -5,4 +5,5 @@
     <string name="eventgoing">57%</string>
     <string name="eventdate">June 12 at 8 pm</string>
     <string name="desc">Biggest party of the semester with DJ Snake and few more popular DJs at Deetee.</string>
+    <string name="auth_failed">Authentication failed</string>
 </resources>
