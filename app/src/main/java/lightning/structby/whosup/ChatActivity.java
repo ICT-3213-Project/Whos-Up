@@ -11,5 +11,5 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
     }
 
-    
+
 }
