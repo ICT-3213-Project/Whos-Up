@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "520729225736",
+    "firebase_url": "https://whosup-4fe80.firebaseio.com",
+    "project_id": "whosup-4fe80",
+    "storage_bucket": "whosup-4fe80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520729225736:android:d0ec91d499fd0b60",
+        "android_client_info": {
+          "package_name": "lightning.structby.whosup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520729225736-pbif374lscffpc3c59dc55hnt9ummdqp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lightning.structby.whosup",
+            "certificate_hash": "793b628691bdcd867d98da0c6213327d129bfcfe"
+          }
+        },
+        {
+          "client_id": "520729225736-7vcbolo939kmsmulbr3cafg2dp577pqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvYtBU9V24h5g8Fsojueqz_A_DNIsNenk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520729225736-7vcbolo939kmsmulbr3cafg2dp577pqa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
