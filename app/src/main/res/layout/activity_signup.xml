@@ -9,14 +9,33 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lightning.structby.whosup.SignUpActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/nametextView"
+        android:layout_centerHorizontal="true"
+        android:text="Name"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/personNameEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/nametextView"
+        android:layout_marginTop="16dp"
+        />
 
     <TextView
         android:text="Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/personNameEditText"
         android:id="@+id/emailLogintextView" />
 
     <EditText

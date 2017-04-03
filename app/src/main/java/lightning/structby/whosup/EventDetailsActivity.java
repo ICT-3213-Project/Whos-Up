@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class eventDetails extends AppCompatActivity {
+public class EventDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
