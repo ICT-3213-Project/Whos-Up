@@ -112,7 +112,7 @@ public class EventActivity extends Activity {
                 newDataNode.placeName = placeName;
                 newDataNode.placeAddress = placeAddress;
                 newDataNode.placeRating = placeRating;
-                myRef.child("Users").child(uid).child("Event").setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
+                myRef.child("Event").setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){

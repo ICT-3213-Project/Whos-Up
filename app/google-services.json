@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "520729225736",
-    "firebase_url": "https://whosup-4fe80.firebaseio.com",
-    "project_id": "whosup-4fe80",
-    "storage_bucket": "whosup-4fe80.appspot.com"
+    "project_number": "258743166850",
+    "firebase_url": "https://whosup-451df.firebaseio.com",
+    "project_id": "whosup-451df",
+    "storage_bucket": "whosup-451df.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:520729225736:android:d0ec91d499fd0b60",
+        "mobilesdk_app_id": "1:258743166850:android:d0ec91d499fd0b60",
         "android_client_info": {
           "package_name": "lightning.structby.whosup"
         }
       },
       "oauth_client": [
         {
-          "client_id": "520729225736-pbif374lscffpc3c59dc55hnt9ummdqp.apps.googleusercontent.com",
+          "client_id": "258743166850-59uqmtgj7i69j188gfdkovrjoc45hk1f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "lightning.structby.whosup",
-            "certificate_hash": "793b628691bdcd867d98da0c6213327d129bfcfe"
+            "certificate_hash": "364fc0fe87e453efeaf3eb3e4dc710a156c82305"
           }
         },
         {
-          "client_id": "520729225736-7vcbolo939kmsmulbr3cafg2dp577pqa.apps.googleusercontent.com",
+          "client_id": "258743166850-fthldj8hh44d0ooviolqmcl2ljk6k4mb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCvYtBU9V24h5g8Fsojueqz_A_DNIsNenk"
+          "current_key": "AIzaSyCbFx6Yy6TjWtAL4cufZaLvL8WrmwR7oPY"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "520729225736-7vcbolo939kmsmulbr3cafg2dp577pqa.apps.googleusercontent.com",
+              "client_id": "258743166850-fthldj8hh44d0ooviolqmcl2ljk6k4mb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

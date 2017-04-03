@@ -139,7 +139,7 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
-                    android:id="@+id/people1"
+                    android:id="@+id/people2"
                     android:src="@drawable/person"
                     app:riv_corner_radius="10dip"
                     app:riv_mutate_background="true"
@@ -152,7 +152,7 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
-                    android:id="@+id/people1"
+                    android:id="@+id/people3"
                     android:src="@drawable/person"
                     app:riv_corner_radius="10dip"
                     app:riv_mutate_background="true"
@@ -216,7 +216,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_view_inner"
+                    android:id="@+id/card_view_inner1"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     app:cardCornerRadius="10dp"

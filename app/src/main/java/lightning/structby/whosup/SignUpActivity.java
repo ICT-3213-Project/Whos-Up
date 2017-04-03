@@ -172,7 +172,7 @@ public class SignUpActivity extends AppCompatActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             //Toast.makeText(SignUpActivity.this, R.string.auth_failed,Toast.LENGTH_SHORT).show();
-
+                            Log.w(TAG, "signUpWithEmail:failed", task.getException());
                             progressDialog.dismiss();
                             builder1.setTitle("Error");
                             builder1.setMessage("Check your internet connection.");

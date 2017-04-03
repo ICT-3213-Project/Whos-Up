@@ -36,7 +36,7 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".eventDetails"
+            android:name=".EventDetailsActivity"
             android:label="Details" />
         <activity android:name=".ChatActivity" />
 
