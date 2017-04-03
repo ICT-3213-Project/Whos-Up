@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Message {
 
-    private int eventId;
+    private String eventId;
     private String senderId;
     private Date date;
     private String message;
@@ -18,7 +18,7 @@ public class Message {
 
     public Message(){}
 
-    public Message(String message, String senderId, int eventId, Date date, String mediaUrl){
+    public Message(String message, String senderId, String eventId, Date date, String mediaUrl){
         this.message = message;
         this.date = date;
         this.senderId = senderId;
@@ -27,9 +27,9 @@ public class Message {
     }
 
 
-    public int getEventId() { return eventId; }
+    public String getEventId() { return eventId; }
 
-    public void setEventId(int eventId) { this.eventId = eventId; }
+    public void setEventId(String eventId) { this.eventId = eventId; }
 
     public String getSenderId() { return senderId; }
 
