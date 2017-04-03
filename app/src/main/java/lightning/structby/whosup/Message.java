@@ -1,6 +1,8 @@
 package lightning.structby.whosup;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by vinayak on 4/3/17.
@@ -41,7 +43,15 @@ public class Message {
 
     public void setMediaUrl(String mediaUrl) { this.mediaUrl = mediaUrl; }
 
-
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("eventId", eventId);
+        result.put("date", date);
+        result.put("senderId", senderId);
+        result.put("mediaUrl", mediaUrl);
+        result.put("message", message);
+        return result;
+    }
 
 
 }
