@@ -20,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -27,15 +31,17 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabase;
     private static final String TAG = "SignUpActivity";
 
     EditText email;
     EditText password;
+    EditText name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_signup);
 
 
 
@@ -76,13 +82,14 @@ public class SignUpActivity extends AppCompatActivity {
     public void signup(View view){
         email = (EditText)findViewById(R.id.emaileditText);
         password = (EditText)findViewById(R.id.passwordeditText);
+        name = (EditText)findViewById(R.id.personNameEditText);
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
         createAccount(emailString,passwordString);
 
     }
 
-    public void createAccount(String email, String password){
+    public void createAccount(final String email, String password){
 
         Log.d(TAG, "createAccount:" + email);
         if (!validate()) {
@@ -116,6 +123,38 @@ public class SignUpActivity extends AppCompatActivity {
 
                         if(task.isSuccessful())
                         {
+                            String nameString = name.getText().toString();
+
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                            }
+                                        }
+                                    });
+
+                            HashMap<String,String> datamap = new HashMap<String, String>();
+                            datamap.put("Name",nameString);
+                            datamap.put("E-mail",email);
+
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful()){
+                                        //Toast.makeText(context,"Successful",Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        //Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+
                             progressDialog.dismiss();
                             builder1.setTitle("Congratulations!");
                             builder1.setMessage("Your account has been registered successfully.");

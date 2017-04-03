@@ -49,7 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void eventDetails(View v){
-        Intent i = new Intent(this, EventDetails.class);
+
+        Intent i = new Intent(this, EventDetailsActivity.class);
         startActivity(i);
     }
 }
