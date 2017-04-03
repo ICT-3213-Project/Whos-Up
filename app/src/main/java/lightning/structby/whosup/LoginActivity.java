@@ -132,6 +132,8 @@ public class LoginActivity extends AppCompatActivity {
     {
         finish();
         Intent intent = new Intent(this, EventActivity.class);
+        emailEditText = (EditText)findViewById(R.id.emailLogineditText);
+        intent.putExtra("userId", emailEditText.getText().toString());
         startActivity(intent);
     }
 

@@ -12,11 +12,13 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 public class EventActivity extends Activity {
 
     private static final String TAG = "AddEventActivity";
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+        userId = getIntent().getStringExtra("userId");
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
