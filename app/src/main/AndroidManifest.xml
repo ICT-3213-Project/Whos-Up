@@ -9,6 +9,9 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -16,8 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpActivity">
-        </activity>
+        <activity android:name=".SignUpActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,6 +35,24 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".eventDetails"
+            android:label="Details" />
+        <activity android:name=".ChatActivity" />
+
+        <service
+            android:name=".MessagingService" android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".FirebaseInstance">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EventActivity" />
         <activity android:name=".LoginActivity">
@@ -42,6 +62,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".AboutActivity"/>
+
     </application>
 
 </manifest>

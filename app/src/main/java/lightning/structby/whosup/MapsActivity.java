@@ -45,7 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (Resources.NotFoundException e) {
             Log.e(TAG, "Can't find style. Error: ", e);
         }
-        // Position the map's camera near Sydney, Australia.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(13.3453188, 74.7952696), 16));
     }
 
