@@ -4,16 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,9 +29,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+class ProfileDataNode{
+    public String userName;
+    public String userEmail;
+    public String userDescription;
+    public String userProfileImage;
+}
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -33,10 +48,15 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
     private static final String TAG = "SignUpActivity";
+    private final int PICK_IMAGE = 1;
+    private ImageView profilePictureImageView;
+    private Bitmap imagebitmap;
+
 
     EditText email;
     EditText password;
     EditText name;
+    EditText description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +100,18 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signup(View view){
-        email = (EditText)findViewById(R.id.emaileditText);
+        email = (EditText)findViewById(R.id.emailEditText);
         password = (EditText)findViewById(R.id.passwordeditText);
         name = (EditText)findViewById(R.id.personNameEditText);
+        description = (EditText)findViewById(R.id.descriptioneditText);
         String emailString = email.getText().toString();
         String passwordString = password.getText().toString();
-        createAccount(emailString,passwordString);
+        String descriptionString = description.getText().toString();
+        createAccount(emailString,passwordString,descriptionString);
 
     }
 
-    public void createAccount(final String email, String password){
+    public void createAccount(final String email, String password, final String description){
 
         Log.d(TAG, "createAccount:" + email);
         if (!validate()) {
@@ -137,12 +159,25 @@ public class SignUpActivity extends AppCompatActivity {
                                         }
                                     });
 
-                            HashMap<String,String> datamap = new HashMap<String, String>();
-                            datamap.put("Name",nameString);
-                            datamap.put("E-mail",email);
+                            //Encoding bitmap to a string
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            imagebitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                            byte[] byteFormat = stream.toByteArray();
+                            String encodedImage = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
+                            //Decoding string to a bitmap
+                            //byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                            //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            //profilePictureImageView.setImageBitmap(decodedByte);
+
+                            ProfileDataNode profileDataNode = new ProfileDataNode();
+                            profileDataNode.userName = nameString;
+                            profileDataNode.userEmail = email;
+                            profileDataNode.userDescription = description;
+                            profileDataNode.userProfileImage = encodedImage;
 
                             mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(datamap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(profileDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
@@ -194,7 +229,7 @@ public class SignUpActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        email = (EditText)findViewById(R.id.emaileditText);
+        email = (EditText)findViewById(R.id.emailEditText);
         password = (EditText)findViewById(R.id.passwordeditText);
 
         String emailString = email.getText().toString();
@@ -228,6 +263,27 @@ public class SignUpActivity extends AppCompatActivity {
         finish();
         Intent intent = new Intent(this, EventActivity.class);
         startActivity(intent);
+    }
+
+    public void selectImage(View view){
+        Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        gallIntent.setType("image/*");
+        startActivityForResult(Intent.createChooser(gallIntent, "Select Profile Picture"), PICK_IMAGE);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG,"Status: " + requestCode + " " + resultCode);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                profilePictureImageView = (ImageView) findViewById(R.id.profileImageView);
+                profilePictureImageView.setImageBitmap(imagebitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
