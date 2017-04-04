@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:background="@android:color/white"
     tools:context="lightning.structby.whosup.EventDetailsActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -113,14 +114,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             android:layout_weight="8">
-            <LinearLayout
+
+            <LinearLayout android:id="@+id/imageContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layoutDirection="rtl"
-                android:layout_margin="5dp">
+                android:layoutDirection="rtl">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -128,41 +128,29 @@
                     android:layout_height="85dp"
                     android:id="@+id/people1"
                     android:src="@drawable/person"
-                    app:riv_corner_radius="10dip"
+                    app:riv_corner_radius="10dp"
                     app:riv_mutate_background="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
                     android:scaleType="centerCrop" />
                 <com.makeramen.roundedimageview.RoundedImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:id="@+id/people2"
                     android:src="@drawable/person"
-                    app:riv_corner_radius="10dip"
+                    app:riv_corner_radius="10dp"
                     app:riv_mutate_background="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
                     android:scaleType="centerCrop" />
                 <com.makeramen.roundedimageview.RoundedImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     android:id="@+id/people3"
                     android:src="@drawable/person"
-                    app:riv_corner_radius="10dip"
+                    app:riv_corner_radius="10dp"
                     app:riv_mutate_background="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
                     android:scaleType="centerCrop" />
-
-
+                
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,7 +159,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="10dp">
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_view_inner"
+                    android:id="@+id/userGoing"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     app:cardCornerRadius="10dp"
@@ -181,6 +169,7 @@
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@android:color/white">
                     <RelativeLayout
+                        android:id="@+id/userGoingLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -195,7 +184,7 @@
                                 android:id="@+id/bookmark"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="bookmark_border"
+                                android:text="event"
                                 android:textSize="25sp"
                                 android:textStyle="bold"
                                 android:textColor="@android:color/darker_gray"
@@ -204,7 +193,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Save"
+                                android:text="Join"
                                 android:layout_marginLeft="3dp"
                                 android:textSize="16sp"
                                 android:textColor="@android:color/darker_gray"
@@ -216,7 +205,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_view_inner1"
+                    android:id="@+id/peopleCount"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
                     app:cardCornerRadius="10dp"
@@ -226,6 +215,7 @@
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@android:color/holo_green_light">
                     <RelativeLayout
+                        android:id="@+id/peopleCountLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"

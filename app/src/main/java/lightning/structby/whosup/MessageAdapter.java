@@ -50,7 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         else{
             ReceiverViewHolder rvh = (ReceiverViewHolder) holder;
             rvh.textViewMessage.setText(message.getMessage());
-            rvh.textViewUserId.setText(message.getSenderId());
+//            rvh.textViewUserId.setText(message.getSenderId());
         }
 
     }
@@ -78,7 +78,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             textViewMessage = (TextView) v.findViewById(R.id.messageId);
             //roundedImageView = (RoundedImageView) v.findViewById(R.id.userProfile);
-            textViewUserId = (TextView) v.findViewById(R.id.userProfile);
+//            textViewUserId = (TextView) v.findViewById(R.id.userProfile);
         }
     }
 
