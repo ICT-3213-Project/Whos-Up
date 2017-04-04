@@ -9,14 +9,40 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lightning.structby.whosup.SignUpActivity">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="130dp"
+        android:layout_height="150dp"
+        android:id="@+id/profileImageView"
+        app:riv_corner_radius_bottom_left="10dip"
+        app:riv_corner_radius_bottom_right="10dip"
+        app:riv_corner_radius_top_left="10dip"
+        app:riv_corner_radius_top_right="10dip"
+        app:riv_mutate_background="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:layout_above="@+id/nametextView"
+        android:onClick="selectImage"
+        android:background="@android:color/darker_gray"/>
+
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/nametextView"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:id="@+id/profileImageView"/>-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
         android:id="@+id/nametextView"
         android:layout_centerHorizontal="true"
-        android:text="Name"/>
+        android:layout_above="@+id/personNameEditText"
+        android:text="Name"
+        android:layout_marginTop="9dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,17 +51,15 @@
         android:ems="10"
         android:id="@+id/personNameEditText"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/nametextView"
-        android:layout_marginTop="16dp"
-        />
+        android:layout_above="@+id/emailLogintextView"/>
 
     <TextView
         android:text="Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/personNameEditText"
+        android:layout_marginTop="9dp"
+        android:layout_above="@+id/emailEditText"
         android:id="@+id/emailLogintextView" />
 
     <EditText
@@ -43,18 +67,16 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/emaileditText"
-        android:layout_centerVertical="true"
+        android:id="@+id/emailEditText"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/emailLogintextView"
-        android:layout_marginTop="16dp"/>
+        android:layout_above="@+id/passwordtextView"/>
 
     <TextView
         android:text="Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/emaileditText"
-        android:layout_marginTop="30dp"
+        android:layout_above="@+id/passwordeditText"
+        android:layout_marginTop="9dp"
         android:id="@+id/passwordtextView"
         android:layout_centerHorizontal="true"/>
 
@@ -63,10 +85,28 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@+id/passwordtextView"
-        android:layout_alignStart="@+id/emaileditText"
-        android:layout_marginTop="16dp"
+        android:layout_above="@+id/descriptiontextView"
+        android:layout_centerHorizontal="true"
         android:id="@+id/passwordeditText"/>
+
+    <TextView
+        android:text="Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/descriptioneditText"
+        android:layout_marginTop="9dp"
+        android:id="@+id/descriptiontextView"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_above="@+id/signupbutton"
+        android:layout_marginBottom="9dp"
+        android:id="@+id/descriptioneditText"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:text="SignUp"
@@ -74,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="3dp"
         android:onClick="signup"
         android:id="@+id/signupbutton" />
 </RelativeLayout>
