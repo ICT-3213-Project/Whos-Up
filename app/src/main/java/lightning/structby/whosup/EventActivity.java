@@ -95,8 +95,8 @@ public class EventActivity extends Activity {
 
                 String pushKey = myRef.child("Events").push().getKey();
 
-                for(int i = 0; i < newEvent.peopleAttending.size(); i++){
-                    myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(newEvent.peopleAttending.get(i));
+                for(int i = 0; i < peopleAttending.size(); i++){
+                    myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(peopleAttending.get(i));
                 }
                 myRef.child("Events").child(pushKey).setValue(newEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
