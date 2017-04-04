@@ -20,15 +20,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class DataNode{
         public String placeName;
         public String placeAddress;
-        public float placeRating;
         public String eventName;
         public String eventDescription;
         public String eventDate;
         public String eventTime;
-        public String [] peopleAttending;
+        List<String> peopleAttending = new ArrayList<>();
 }
 
 public class EventActivity extends Activity {
@@ -37,7 +39,6 @@ public class EventActivity extends Activity {
 
     String placeName;
     String placeAddress;
-    float placeRating;
     FirebaseDatabase database;
     DatabaseReference myRef;
     FirebaseUser user;
@@ -70,13 +71,8 @@ public class EventActivity extends Activity {
                 // TODO: Get info about the selected place.
                 placeName = place.getName().toString();
                 placeAddress = place.getAddress().toString();
-                placeRating = place.getRating();
                 Log.i(TAG, "Place: " + place.getName());
-                //Log.i(TAG, "Id: " + place.getId());
                 Log.i(TAG, "Address: " + place.getAddress());
-                //Log.i(TAG, "Locale: " + place.getLocale());
-                //Log.i(TAG, "Place Type: " + place.getPlaceTypes());
-                Log.i(TAG, "Rating: " + place.getRating());
             }
 
             @Override
@@ -108,9 +104,15 @@ public class EventActivity extends Activity {
                 newDataNode.eventTime = timeString;
                 newDataNode.placeName = placeName;
                 newDataNode.placeAddress = placeAddress;
-                newDataNode.placeRating = placeRating;
-                newDataNode.peopleAttending[0] = uid;
-                myRef.child("Event").push().setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
+                newDataNode.peopleAttending.add(uid);
+                newDataNode.peopleAttending.add("1234");
+
+                String pushKey = myRef.child("Event").push().getKey();
+
+                for(int i = 0;i < newDataNode.peopleAttending.size();i++){
+                    myRef.child("Event").child(pushKey).child("peopleAttending").push().setValue(newDataNode.peopleAttending.get(i));
+                }
+                myRef.child("Event").child(pushKey).setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
@@ -121,6 +123,7 @@ public class EventActivity extends Activity {
                         }
                     }
                 });
+
             }
         });
     }

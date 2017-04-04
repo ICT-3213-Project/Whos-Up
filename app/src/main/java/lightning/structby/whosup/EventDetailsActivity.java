@@ -4,15 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.CardView;
 import android.util.DisplayMetrics;
+
+import android.os.Bundle;
+
 import android.util.Log;
-import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.*;
+import android.view.GestureDetector;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -78,6 +88,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         rl = (CardView) findViewById(R.id.userGoingLayout);
         rl.getLayoutParams().width = (int)width/3;
         rl.getLayoutParams().height = (int)width/3;
+
     }
 
     public void openChat(View v){
