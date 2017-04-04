@@ -206,7 +206,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         String passwordString = password.getText().toString();
-        if (TextUtils.isEmpty(passwordString) || passwordString.length() < 4 ) {
+        if (TextUtils.isEmpty(passwordString) || passwordString.length() < 6 ) {
             password.setError("Enter a strong password.");
             valid = false;
         } else {

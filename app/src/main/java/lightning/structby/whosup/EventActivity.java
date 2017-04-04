@@ -28,7 +28,7 @@ class DataNode{
         public String eventDescription;
         public String eventDate;
         public String eventTime;
-
+        public String [] peopleAttending;
 }
 
 public class EventActivity extends Activity {
@@ -48,8 +48,6 @@ public class EventActivity extends Activity {
     EditText dateEditText;
     EditText timeEditText;
 
-    private String userId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,6 @@ public class EventActivity extends Activity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
-        userId = getIntent().getStringExtra("userId");
 
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
@@ -112,7 +109,8 @@ public class EventActivity extends Activity {
                 newDataNode.placeName = placeName;
                 newDataNode.placeAddress = placeAddress;
                 newDataNode.placeRating = placeRating;
-                myRef.child("Event").setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
+                newDataNode.peopleAttending[0] = uid;
+                myRef.child("Event").push().setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
