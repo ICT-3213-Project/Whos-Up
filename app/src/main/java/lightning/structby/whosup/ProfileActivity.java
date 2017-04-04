@@ -19,6 +19,8 @@ public class ProfileActivity extends AppCompatActivity {
         shortBio = (EditText) findViewById(R.id.user_profile_short_bio);
         about = (EditText) findViewById(R.id.user_profile_about);
 
+        loadProfile();
+
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -69,6 +71,10 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void loadProfile() {
+
     }
 
 

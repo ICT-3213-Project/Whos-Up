@@ -40,19 +40,6 @@
             android:label="Details" />
         <activity android:name=".ChatActivity" />
 
-        <service
-            android:name=".MessagingService" android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
-        <service android:name=".FirebaseInstance">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EventActivity" />
         <activity android:name=".LoginActivity">
