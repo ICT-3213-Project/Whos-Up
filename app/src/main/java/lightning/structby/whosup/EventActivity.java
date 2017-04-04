@@ -23,16 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-class DataNode{
-        public String placeName;
-        public String placeAddress;
-        public String eventName;
-        public String eventDescription;
-        public String eventDate;
-        public String eventTime;
-        List<String> peopleAttending = new ArrayList<>();
-}
-
 public class EventActivity extends Activity {
 
     private static final String TAG = "AddEventActivity";
@@ -97,22 +87,18 @@ public class EventActivity extends Activity {
                 String dateString = dateEditText.getText().toString();
                 String timeString = timeEditText.getText().toString();
 
-                DataNode newDataNode = new DataNode();
-                newDataNode.eventName = eventNameString;
-                newDataNode.eventDescription = descriptionString;
-                newDataNode.eventDate = dateString;
-                newDataNode.eventTime = timeString;
-                newDataNode.placeName = placeName;
-                newDataNode.placeAddress = placeAddress;
-                newDataNode.peopleAttending.add(uid);
-                newDataNode.peopleAttending.add("1234");
+                List<String> peopleAttending = new ArrayList<>();
+                peopleAttending.add(uid);
+                peopleAttending.add("1234");
 
-                String pushKey = myRef.child("Event").push().getKey();
+                Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeAddress, peopleAttending);
 
-                for(int i = 0;i < newDataNode.peopleAttending.size();i++){
-                    myRef.child("Event").child(pushKey).child("peopleAttending").push().setValue(newDataNode.peopleAttending.get(i));
+                String pushKey = myRef.child("Events").push().getKey();
+
+                for(int i = 0; i < newEvent.peopleAttending.size(); i++){
+                    myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(newEvent.peopleAttending.get(i));
                 }
-                myRef.child("Event").child(pushKey).setValue(newDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
+                myRef.child("Events").child(pushKey).setValue(newEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
