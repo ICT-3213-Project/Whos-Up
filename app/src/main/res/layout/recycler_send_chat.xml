@@ -15,8 +15,8 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:layout_marginLeft="50dp"
-        android:textDirection="ltr"
         android:background="@drawable/send_message"
+        android:textDirection="ltr"
         android:text="Hello, world! This is Vinayak. This is a very long text just to text what happens to long texts."
         android:textSize="18sp" />
 

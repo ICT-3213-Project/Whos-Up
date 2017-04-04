@@ -128,9 +128,8 @@
                     android:layout_height="85dp"
                     android:id="@+id/people1"
                     android:src="@drawable/person"
-                    app:riv_corner_radius="10dip"
+                    app:riv_corner_radius="10dp"
                     app:riv_mutate_background="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:scaleType="centerCrop" />
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -138,9 +137,8 @@
                     android:layout_height="85dp"
                     android:id="@+id/people2"
                     android:src="@drawable/person"
-                    app:riv_corner_radius="10dip"
+                    app:riv_corner_radius="10dp"
                     app:riv_mutate_background="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:scaleType="centerCrop" />
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -148,13 +146,11 @@
                     android:layout_height="85dp"
                     android:id="@+id/people3"
                     android:src="@drawable/person"
-                    app:riv_corner_radius="10dip"
+                    app:riv_corner_radius="10dp"
                     app:riv_mutate_background="true"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:scaleType="centerCrop" />
-
-
+                
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -173,6 +169,7 @@
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@android:color/white">
                     <RelativeLayout
+                        android:id="@+id/userGoingLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -218,6 +215,7 @@
                     android:layout_marginBottom="5dp"
                     app:cardBackgroundColor="@android:color/holo_green_light">
                     <RelativeLayout
+                        android:id="@+id/peopleCountLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
