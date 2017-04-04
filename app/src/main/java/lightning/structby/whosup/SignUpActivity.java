@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -31,16 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-class ProfileDataNode{
-    public String userName;
-    public String userEmail;
-    public String userDescription;
-    public String userProfileImage;
-}
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -111,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    public void createAccount(final String email, String password, final String description){
+    public void createAccount(final String email, String password, final String shortBio){
 
         Log.d(TAG, "createAccount:" + email);
         if (!validate()) {
@@ -170,14 +161,10 @@ public class SignUpActivity extends AppCompatActivity {
                             //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                             //profilePictureImageView.setImageBitmap(decodedByte);
 
-                            ProfileDataNode profileDataNode = new ProfileDataNode();
-                            profileDataNode.userName = nameString;
-                            profileDataNode.userEmail = email;
-                            profileDataNode.userDescription = description;
-                            profileDataNode.userProfileImage = encodedImage;
+                            User profileDataNode = new User(nameString, email, shortBio, encodedImage);
 
                             mDatabase = FirebaseDatabase.getInstance().getReference();
-                            mDatabase.child("Users").child(user.getUid()).child("Profile").setValue(profileDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            mDatabase.child("Users").child(user.getUid()).setValue(profileDataNode).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
