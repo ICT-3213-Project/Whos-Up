@@ -41,6 +41,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         tv=(TextView)findViewById(R.id.bookmark);
         tv.setTypeface(face);
 
+        responsiveTiles();
 
         userId = "Z10z93OdYjaLFelnh4i98XuhQqB3";
         eventId = "-KgsrBfBoW5N72qqwcFG";
@@ -87,7 +88,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     public void joinEvent(View v){
         TextView tv = (TextView) findViewById(R.id.goingText);
         tv.setText("Going");
-        
+
 
     }
 }

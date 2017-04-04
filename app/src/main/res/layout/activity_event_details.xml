@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
@@ -8,6 +8,12 @@
     android:orientation="vertical"
     android:background="@android:color/white"
     tools:context="lightning.structby.whosup.EventDetailsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -257,11 +263,12 @@
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/holo_orange_dark"
-        android:layout_alignParentBottom="true"
+        android:layout_weight="0"
         android:onClick="openChat">
         <TextView
             android:layout_width="match_parent"
@@ -272,4 +279,4 @@
             android:textSize="20sp"/>
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
