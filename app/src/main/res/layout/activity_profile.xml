@@ -34,10 +34,10 @@
             android:src="@drawable/ic_more_horiz" />
 
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_profile_image"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:id="@+id/profileImage"
             android:src="@drawable/person"
             app:riv_corner_radius_bottom_left="10dip"
             app:riv_corner_radius_bottom_right="10dip"
@@ -51,7 +51,7 @@
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profileImage"
+            android:layout_below="@+id/user_profile_image"
             android:background="#f9f9f9"
             android:paddingBottom="24dp">
 
