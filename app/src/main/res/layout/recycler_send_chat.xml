@@ -3,8 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="rtl"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="2dp"
     android:layout_marginRight="10dp">
+
 
     <TextView
         android:id="@+id/messageId"
@@ -12,8 +14,12 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:elevation="1dp"
+        android:layout_marginBottom="1dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        android:minHeight="40dp"
+        android:gravity="center_vertical|left"
         android:layout_marginLeft="50dp"
         android:background="@drawable/send_message"
         android:textDirection="ltr"

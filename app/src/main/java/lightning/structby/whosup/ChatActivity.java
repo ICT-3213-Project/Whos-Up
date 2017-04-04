@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private static boolean singleton = false;
     private String eventId;
     private String userId;
     private DatabaseReference databaseReference;
@@ -40,8 +41,8 @@ public class ChatActivity extends AppCompatActivity {
         Button tv = (Button) findViewById(R.id.sendButton);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
-        eventId = "69";
-        userId = "g@gmail";
+        eventId = "-KgsrBfBoW5N72qqwcFG";
+        userId = "Z10z93OdYjaLFelnh4i98XuhQqB3";
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,8 +50,10 @@ public class ChatActivity extends AppCompatActivity {
         messages = new ArrayList<>();
         adapter = new MessageAdapter(messages, this, userId);
         recyclerView.setAdapter(adapter);
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if(!singleton) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            singleton = !singleton;
+        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
         databaseReference.orderByChild("eventId").equalTo("69").addChildEventListener(new ChildEventListener() {
