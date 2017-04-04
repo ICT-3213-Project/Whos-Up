@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.view.GestureDetector;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -40,6 +42,18 @@ public class EventDetailsActivity extends AppCompatActivity {
         tv.setTypeface(face);
         tv=(TextView)findViewById(R.id.bookmark);
         tv.setTypeface(face);
+
+        double width = (Resources.getSystem().getDisplayMetrics().widthPixels - 60) * 0.8 - 60;
+        Log.d("WIDTH", width + "");
+        RoundedImageView rv = (RoundedImageView) findViewById(R.id.people1);
+        rv.getLayoutParams().width = (int)width/3;
+        rv.getLayoutParams().height = (int)width/3;
+        rv = (RoundedImageView) findViewById(R.id.people2);
+        rv.getLayoutParams().width = (int)width/3;
+        rv.getLayoutParams().height = (int)width/3;
+        rv = (RoundedImageView) findViewById(R.id.people3);
+        rv.getLayoutParams().width = (int)width/3;
+        rv.getLayoutParams().height = (int)width/3;
     }
 
 
