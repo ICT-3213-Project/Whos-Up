@@ -56,11 +56,10 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
-        databaseReference.orderByChild("eventId").equalTo("69").addChildEventListener(new ChildEventListener() {
+        databaseReference.orderByChild("eventId").equalTo(eventId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message m = dataSnapshot.getValue(Message.class);
-                Log.d("JKJK", m.getMessage());
                 if (m.getSenderId() != userId) {
                     messages.add(m);
                     adapter.notifyItemInserted(messages.size() - 1);
@@ -94,7 +93,6 @@ public class ChatActivity extends AppCompatActivity {
 
     public void sendMessage(View v) {
         Date now = new Date();
-        Log.d("TIME", now + "");
         et = (EditText) findViewById(R.id.userMessage);
         String message = et.getText().toString();
         if (message.equals(""))
