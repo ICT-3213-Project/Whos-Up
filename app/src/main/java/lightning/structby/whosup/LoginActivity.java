@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         String passwordString = passwordEditText.getText().toString();
-        if (TextUtils.isEmpty(passwordString) || passwordString.length() < 4 ) {
+        if (TextUtils.isEmpty(passwordString) || passwordString.length() < 6 ) {
             passwordEditText.setError("Enter a strong password.");
             valid = false;
         } else {

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -219,6 +220,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         email = (EditText)findViewById(R.id.emailEditText);
         password = (EditText)findViewById(R.id.passwordeditText);
+        name = (EditText)findViewById(R.id.personNameEditText);
+        description = (EditText)findViewById(R.id.descriptioneditText);
 
         String emailString = email.getText().toString();
         if (TextUtils.isEmpty(emailString) || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailString).matches()) {
@@ -235,6 +238,23 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             password.setError(null);
         }
+
+        String nameString = name.getText().toString();
+        if (TextUtils.isEmpty(nameString)){
+            name.setError("Enter a valid name.");
+            valid = false;
+        }else {
+            name.setError(null);
+        }
+
+        String descriptionString = description.getText().toString();
+        if(TextUtils.isEmpty(descriptionString)){
+            description.setError("Enter a short bio.");
+            valid = false;
+        }else {
+            description.setError(null);
+        }
+
 
         return valid;
     }

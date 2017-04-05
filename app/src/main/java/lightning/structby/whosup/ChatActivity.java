@@ -38,7 +38,6 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Message> messages;
-    private static Context context;
     EditText et;
 
     @Override
@@ -46,7 +45,6 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        context = this;
         Button tv = (Button) findViewById(R.id.sendButton);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
@@ -104,7 +102,7 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View v) {
         Date now = new Date();
         et = (EditText) findViewById(R.id.userMessage);
-        String message = et.getText().toString();
+        String message = et.getText().toString().trim();
         if (message.equals(""))
             return;
         Message m = new Message(message, userId, eventId, now, "");

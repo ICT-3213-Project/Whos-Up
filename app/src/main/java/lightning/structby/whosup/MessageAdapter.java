@@ -38,18 +38,22 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Message> messages;
     private Context context;
     private String userId;
-    private String encodedPicture;
-    private String callbackUserId;
     private List<User> users;
-    private ReceiverViewHolder rvh;
-    private Map<String, Integer> delayedUpdate;
+    private Map<String, BitmapDrawable> profilePictures;
+    private Map<String, Boolean> waitForevent;
+    private static boolean singleton = false;
 
     public MessageAdapter(List<Message> messages, Context context, String userId) {
         this.messages = messages;
         this.context = context;
         this.userId = userId;
         users = new ArrayList<>();
-        delayedUpdate = new HashMap<>();
+        profilePictures = new HashMap<>();
+        waitForevent = new HashMap<>();
+        if(!singleton) {
+//            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            singleton = !singleton;
+        }
     }
 
 
@@ -64,14 +68,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         else {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recycler_receive_chat, parent, false);
-            rvh = new ReceiverViewHolder(v);
-            return rvh;
+            return new ReceiverViewHolder(v);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.d("Call", "Called here too!");
         Message message = messages.get(position);
         if(holder.getItemViewType() == 1){
             SenderViewHolder svh = (SenderViewHolder) holder;
@@ -80,58 +82,36 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         else{
             ReceiverViewHolder rvh = (ReceiverViewHolder) holder;
             rvh.textViewMessage.setText(message.getMessage());
-            rvh.roundedImageView.setBackgroundColor(Color.BLACK);
-            boolean foundUser = false;
-            for (User u: users) {
-                if(message.getSenderId().equals(u.getEmail())){
-                    foundUser = true;
-                    Log.d("Call", "reached");
-                    byte[] imgBytes = Base64.decode(u.getProfileImage(), Base64.NO_WRAP);
-                    Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-                    rvh.roundedImageView.setImageBitmap(bmp);
-                    rvh.roundedImageView.setBackgroundColor(Color.BLACK);
-                    rvh.roundedImageView.setBackground(new BitmapDrawable(context.getResources(), bmp));
-                    break;
-                }
+            BitmapDrawable dp = profilePictures.get(message.getSenderId());
+            if(dp != null){
+                rvh.roundedImageView.setBackground(dp);
             }
-            if(!foundUser) {
-                if(delayedUpdate.get(message.getSenderId()) == null) {
-                    delayedUpdate.put(message.getSenderId(), position);
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-                    Query query = reference.orderByChild("email").equalTo(message.getSenderId()).limitToFirst(1);
-                    query.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                User user = ds.getValue(User.class);
-                                if (user != null) {
-                                    Log.d("HERE", "received");
-                                    users.add(user);
-//                                setProfilePicture(user.getEmail());
-                                } else {
-                                    Log.d("FU", "null returned!");
-                                }
+            else if(waitForevent.get(message.getSenderId()) == null){
+                waitForevent.put(message.getSenderId(), false);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+                Query query = reference.orderByChild("email").equalTo(message.getSenderId()).limitToFirst(1);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            User user = ds.getValue(User.class);
+                            if (user != null) {
+                                byte[] imgBytes = Base64.decode(user.getProfileImage(), Base64.NO_WRAP);
+                                Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
+                                BitmapDrawable dp = new BitmapDrawable(context.getResources(), bmp);
+                                profilePictures.put(user.getEmail(), dp);
+                                users.add(user);
+                                waitForevent.remove(user.getEmail());
                             }
-
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        }
+                    }
 
-                    });
-                }
-
-//                try {
-//                    byte[] imgBytes = Base64.decode(encodedPicture, Base64.NO_WRAP);
-//                    Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-//                    rvh.roundedImageView.setBackground(new BitmapDrawable(context.getResources(), bmp));
-//                    notifyItemChanged(position);
-//
-//                } catch (Exception e) {
-//                    Log.d("ERR", e.toString());
-//                }
+                });
             }
         }
 
@@ -152,15 +132,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static class ReceiverViewHolder extends RecyclerView.ViewHolder{
 
         TextView textViewMessage;
-        ImageView roundedImageView;
-//        RoundedImageView roundedImageView;
+//        ImageView roundedImageView;
+        RoundedImageView roundedImageView;
 
 
         public ReceiverViewHolder(View v){
             super(v);
 
             textViewMessage = (TextView) v.findViewById(R.id.messageId);
-            roundedImageView = (ImageView) v.findViewById(R.id.userProfile);
+            roundedImageView = (RoundedImageView) v.findViewById(R.id.userProfile);
 
 
         }

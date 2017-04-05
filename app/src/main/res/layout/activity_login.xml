@@ -59,7 +59,7 @@
         android:onClick="login"/>
 
     <TextView
-        android:text="SignUp"
+        android:text="Sign Up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/loginbutton"

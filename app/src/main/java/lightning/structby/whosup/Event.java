@@ -84,4 +84,16 @@ public class Event {
     public void setPeopleAttending(List<String> peopleAttending) {
         this.peopleAttending = peopleAttending;
     }
+
+    public int getPeopleAttendingCount(){
+        return peopleAttending.size();
+    }
+
+    public void addPerson(String userId){
+        peopleAttending.add(userId);
+    }
+
+    public void removePerson(String userId){
+        peopleAttending.remove(userId);
+    }
 }
