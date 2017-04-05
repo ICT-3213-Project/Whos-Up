@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -31,12 +32,8 @@ import java.util.Map;
 /**
  * Created by vinayak on 4/3/17.
  */
-interface profilePictureCallback{
-    void setProfilePicture (String u);
-}
 
-
-public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements profilePictureCallback{
+public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Message> messages;
     private Context context;
@@ -55,21 +52,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         delayedUpdate = new HashMap<>();
     }
 
-    @Override
-    public void setProfilePicture(String userId){
-//        for(User u : users){
-//            if(userId.equals(u.getEmail()))
-//                u.setProfileImage(s);
-//        }
-        int pos = delayedUpdate.get(userId);
-//        byte[] imgBytes = Base64.decode(s, Base64.NO_WRAP);
-//        Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-//        rvh.roundedImageView.setBackground(new BitmapDrawable(context.getResources(), bmp));
-        notifyItemChanged(pos);
-
-//        encodedPicture = s;
-
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -96,13 +78,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             svh.textViewMessage.setText(message.getMessage());
         }
         else{
-
-
             ReceiverViewHolder rvh = (ReceiverViewHolder) holder;
             rvh.textViewMessage.setText(message.getMessage());
+            rvh.roundedImageView.setBackgroundColor(Color.BLACK);
             boolean foundUser = false;
             for (User u: users) {
-                Log.d("Call", message.getSenderId() + " " + u.getEmail());
                 if(message.getSenderId().equals(u.getEmail())){
                     foundUser = true;
                     Log.d("Call", "reached");
@@ -115,30 +95,33 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
             if(!foundUser) {
-                Log.d("CHECK", message.getSenderId());
-                delayedUpdate.put(message.getSenderId(), position);
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-                Query query = reference.orderByChild("email").equalTo(message.getSenderId()).limitToFirst(1);
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                            User user = ds.getValue(User.class);
-                            if (user != null) {
-                                users.add(user);
+                if(delayedUpdate.get(message.getSenderId()) == null) {
+                    delayedUpdate.put(message.getSenderId(), position);
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+                    Query query = reference.orderByChild("email").equalTo(message.getSenderId()).limitToFirst(1);
+                    query.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                User user = ds.getValue(User.class);
+                                if (user != null) {
+                                    Log.d("HERE", "received");
+                                    users.add(user);
 //                                setProfilePicture(user.getEmail());
-                            } else {
-                                Log.d("FU", "null returned!");
+                                } else {
+                                    Log.d("FU", "null returned!");
+                                }
                             }
+
                         }
 
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError){
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
+                        }
 
-                });
+                    });
+                }
 
 //                try {
 //                    byte[] imgBytes = Base64.decode(encodedPicture, Base64.NO_WRAP);
@@ -169,15 +152,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static class ReceiverViewHolder extends RecyclerView.ViewHolder{
 
         TextView textViewMessage;
-        TextView textViewUserId;
-        RoundedImageView roundedImageView;
+        ImageView roundedImageView;
+//        RoundedImageView roundedImageView;
 
 
         public ReceiverViewHolder(View v){
             super(v);
 
             textViewMessage = (TextView) v.findViewById(R.id.messageId);
-            roundedImageView = (RoundedImageView) v.findViewById(R.id.userProfile);
+            roundedImageView = (ImageView) v.findViewById(R.id.userProfile);
 
 
         }
