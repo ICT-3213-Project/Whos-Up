@@ -42,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private final int PICK_IMAGE = 1;
     private ImageView profilePictureImageView;
     private Bitmap imagebitmap;
+    private Bitmap scaled;
 
 
     EditText email;
@@ -152,7 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                             //Encoding bitmap to a string
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            imagebitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                            scaled.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                             byte[] byteFormat = stream.toByteArray();
                             String encodedImage = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
 
@@ -265,8 +266,12 @@ public class SignUpActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 imagebitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                int scaleSize = (int) ( imagebitmap.getHeight() * (512.0 / imagebitmap.getWidth()) );
+                scaled = Bitmap.createScaledBitmap(imagebitmap, 512, scaleSize, true);
+
                 profilePictureImageView = (ImageView) findViewById(R.id.profileImageView);
-                profilePictureImageView.setImageBitmap(imagebitmap);
+                profilePictureImageView.setImageBitmap(scaled);
             } catch (IOException e) {
                 e.printStackTrace();
             }
