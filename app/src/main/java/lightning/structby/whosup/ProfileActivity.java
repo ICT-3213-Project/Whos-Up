@@ -1,9 +1,12 @@
 package lightning.structby.whosup;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,7 +98,10 @@ public class ProfileActivity extends AppCompatActivity {
     private void loadProfile(User user) {
         name.setText(user.getName());
         shortBio.setText(user.getShortBio());
-        //TODO: Profile
+        String encodedImage = user.getProfileImage();
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        profileImage.setImageBitmap(decodedByte);
     }
 
 
