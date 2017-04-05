@@ -51,7 +51,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         profilePictures = new HashMap<>();
         waitForevent = new HashMap<>();
         if(!singleton) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             singleton = !singleton;
         }
     }
