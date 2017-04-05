@@ -1,5 +1,6 @@
 package lightning.structby.whosup;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference userRef;
     FirebaseUser firebaseUser;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
+        progressDialog = new ProgressDialog(ProfileActivity.this);
+        progressDialog.setMessage("Retrieving");
+        progressDialog.show();
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         profileImage.setImageBitmap(decodedByte);
+        progressDialog.dismiss();
     }
 
 
