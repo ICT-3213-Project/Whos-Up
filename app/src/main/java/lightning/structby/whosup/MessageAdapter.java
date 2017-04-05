@@ -96,6 +96,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             User user = ds.getValue(User.class);
                             if (user != null) {
+                                Log.d("SEE", "Received");
                                 byte[] imgBytes = Base64.decode(user.getProfileImage(), Base64.NO_WRAP);
                                 Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
                                 BitmapDrawable dp = new BitmapDrawable(context.getResources(), bmp);
