@@ -8,21 +8,21 @@ import java.util.List;
  */
 
 public class Event {
-    private String placeName;
-    private String placeAddress;
     private String eventName;
     private String eventDescription;
     private String eventDate;
     private String eventTime;
+    private String placeName;
+    private String placeAddress;
     private List<String> peopleAttending = new ArrayList<>();
 
-    public Event(String placeName, String placeAddress, String eventName, String eventDescription, String eventDate, String eventTime, List<String> peopleAttending) {
-        this.placeName = placeName;
-        this.placeAddress = placeAddress;
+    public Event(String eventName, String eventDescription, String eventDate, String eventTime, String placeName, String placeAddress, List<String> peopleAttending) {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
+        this.placeName = placeName;
+        this.placeAddress = placeAddress;
         this.peopleAttending = peopleAttending;
     }
 
@@ -83,5 +83,17 @@ public class Event {
 
     public void setPeopleAttending(List<String> peopleAttending) {
         this.peopleAttending = peopleAttending;
+    }
+
+    public int getPeopleAttendingCount(){
+        return peopleAttending.size();
+    }
+
+    public void addPerson(String userId){
+        peopleAttending.add(userId);
+    }
+
+    public void removePerson(String userId){
+        peopleAttending.remove(userId);
     }
 }

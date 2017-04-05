@@ -1,10 +1,15 @@
 package lightning.structby.whosup;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +20,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,8 +48,8 @@ public class ChatActivity extends AppCompatActivity {
         Button tv = (Button) findViewById(R.id.sendButton);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
-        eventId = "-KgsrBfBoW5N72qqwcFG";
-        userId = "Z10z93OdYjaLFelnh4i98XuhQqB3";
+        eventId = "-Kguex6g7urkfKM1lVa0";
+        userId = "yomama@yo.com";
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,16 +63,17 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
-        databaseReference.orderByChild("eventId").equalTo(eventId).addChildEventListener(new ChildEventListener() {
+        databaseReference.orderByChild("eventId").equalTo(eventId);
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message m = dataSnapshot.getValue(Message.class);
-                if (m.getSenderId() != userId) {
+                String senderId = m.getSenderId();
+                if (senderId != userId) {
                     messages.add(m);
                     adapter.notifyItemInserted(messages.size() - 1);
                     recyclerView.scrollToPosition(messages.size() - 1);
                 }
-
             }
 
             @Override
@@ -94,7 +102,7 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View v) {
         Date now = new Date();
         et = (EditText) findViewById(R.id.userMessage);
-        String message = et.getText().toString();
+        String message = et.getText().toString().trim();
         if (message.equals(""))
             return;
         Message m = new Message(message, userId, eventId, now, "");
@@ -108,4 +116,6 @@ public class ChatActivity extends AppCompatActivity {
         childUpdates.put("/" + key, m);
         databaseReference.updateChildren(childUpdates);
     }
+
+
 }

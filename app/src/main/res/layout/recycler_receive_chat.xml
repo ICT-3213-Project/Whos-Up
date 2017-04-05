@@ -10,10 +10,15 @@
                 android:id="@+id/userProfile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/person"
+                android:background="@android:color/black"
                 android:elevation="1dp"
                 app:riv_corner_radius="20dip"
                 app:riv_mutate_background="true" />
+            <!--<ImageView-->
+                <!--android:id="@+id/userProfile"-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:background="@drawable/circlular_picture" />-->
 
             <TextView android:id="@+id/messageId"
                 android:layout_width="wrap_content"

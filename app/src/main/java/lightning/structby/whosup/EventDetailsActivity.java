@@ -3,10 +3,14 @@ package lightning.structby.whosup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.CardView;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 
 import android.os.Bundle;
@@ -23,15 +27,32 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.vision.text.Text;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class EventDetailsActivity extends AppCompatActivity {
+interface setEvent{
+    void getEventReference(Event event);
+}
+
+public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
     private String eventId;
     private String userId;
+    private Event event;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +75,48 @@ public class EventDetailsActivity extends AppCompatActivity {
         responsiveTiles();
 
         userId = "Z10z93OdYjaLFelnh4i98XuhQqB3";
-        eventId = "-KgsrBfBoW5N72qqwcFG";
+        eventId = "-Kgz6tLEuzAMxu6LB2jQ";
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Events");
+        Query query = databaseReference.orderByKey().equalTo(eventId);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Event event = ds.getValue(Event.class);
+                    if (event != null) {
+                        Log.d("HERE", "ee");
+                        TextView tv = (TextView) findViewById(R.id.event_name);
+                        tv.setText(event.getEventName());
+                        tv = (TextView) findViewById(R.id.location);
+                        tv.setText(event.getPlaceName());
+                        tv = (TextView) findViewById(R.id.date_time);
+                        tv.setText("On " + event.getEventDate() + " at " + event.getEventTime());
+                        tv = (TextView) findViewById(R.id.description);
+                        tv.setText(event.getPlaceName());
+                        tv = (TextView) findViewById(R.id.people_count);
+                        String count = ((Integer)event.getPeopleAttendingCount()).toString();
+                        tv.setText(count);
+                        getEventReference(event);
+                    } else {
+                        Log.d("HERE", "eeeeeeeeeeeee");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
     }
 
+    @Override
+    public void getEventReference(Event event) {
+        this.event = event;
+    }
 
     public void back(View v){
         this.finish();
@@ -88,7 +148,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         rl = (CardView) findViewById(R.id.userGoingLayout);
         rl.getLayoutParams().width = (int)width/3;
         rl.getLayoutParams().height = (int)width/3;
-
     }
 
     public void openChat(View v){
@@ -98,7 +157,18 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void joinEvent(View v){
         TextView tv = (TextView) findViewById(R.id.goingText);
-        tv.setText("Going");
+        if(event.getPeopleAttending().contains(userId)){
+            event.removePerson(userId);
+            tv.setText("Join");
+        }
+        else{
+            tv.setText("Going");
+            event.addPerson(userId);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("/" + eventId + "/peopleAttending", event.getPeopleAttending());
+        databaseReference.updateChildren(map);
 
 
     }
