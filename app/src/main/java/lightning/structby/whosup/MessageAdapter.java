@@ -3,6 +3,7 @@ package lightning.structby.whosup;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +32,7 @@ import java.util.Map;
  * Created by vinayak on 4/3/17.
  */
 interface profilePictureCallback{
-    void setProfilePicture (String s, String u);
+    void setProfilePicture (String u);
 }
 
 
@@ -55,17 +56,18 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void setProfilePicture(String s, String userId){
-        for(User u : users){
-            if(userId.equals(u.getEmail()))
-                u.setProfileImage(s);
-        }
+    public void setProfilePicture(String userId){
+//        for(User u : users){
+//            if(userId.equals(u.getEmail()))
+//                u.setProfileImage(s);
+//        }
         int pos = delayedUpdate.get(userId);
-        byte[] imgBytes = Base64.decode(s, Base64.NO_WRAP);
-        Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-        rvh.roundedImageView.setBackground(new BitmapDrawable(context.getResources(), bmp));
+//        byte[] imgBytes = Base64.decode(s, Base64.NO_WRAP);
+//        Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
+//        rvh.roundedImageView.setBackground(new BitmapDrawable(context.getResources(), bmp));
         notifyItemChanged(pos);
-        encodedPicture = s;
+
+//        encodedPicture = s;
 
     }
 
@@ -106,6 +108,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Log.d("Call", "reached");
                     byte[] imgBytes = Base64.decode(u.getProfileImage(), Base64.NO_WRAP);
                     Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
+                    rvh.roundedImageView.setImageBitmap(bmp);
+                    rvh.roundedImageView.setBackgroundColor(Color.BLACK);
                     rvh.roundedImageView.setBackground(new BitmapDrawable(context.getResources(), bmp));
                     break;
                 }
@@ -122,8 +126,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             User user = ds.getValue(User.class);
                             if (user != null) {
                                 users.add(user);
-                                String image = user.getProfileImage();
-//                                setProfilePicture(image, user.getEmail());
+//                                setProfilePicture(user.getEmail());
                             } else {
                                 Log.d("FU", "null returned!");
                             }

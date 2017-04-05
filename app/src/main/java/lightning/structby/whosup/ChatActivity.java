@@ -51,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
         eventId = "-Kguex6g7urkfKM1lVa0";
-        userId = "ujjwal.arora@gmail.com";
+        userId = "yomama@yo.com";
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
