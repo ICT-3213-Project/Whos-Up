@@ -1,8 +1,10 @@
 package lightning.structby.whosup;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Message> messages;
+    private static Context context;
     EditText et;
 
     @Override
@@ -43,11 +46,12 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        context = this;
         Button tv = (Button) findViewById(R.id.sendButton);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
         eventId = "-Kguex6g7urkfKM1lVa0";
-        userId = "7jSrjUF8B0f0KxeCiUyqhLDdWhl1";
+        userId = "ujjwal.arora@gmail.com";
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,7 +65,8 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
-        databaseReference.orderByChild("eventId").equalTo(eventId).addChildEventListener(new ChildEventListener() {
+        databaseReference.orderByChild("eventId").equalTo(eventId);
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message m = dataSnapshot.getValue(Message.class);
@@ -70,9 +75,6 @@ public class ChatActivity extends AppCompatActivity {
                     messages.add(m);
                     adapter.notifyItemInserted(messages.size() - 1);
                     recyclerView.scrollToPosition(messages.size() - 1);
-
-
-
                 }
             }
 
@@ -116,4 +118,6 @@ public class ChatActivity extends AppCompatActivity {
         childUpdates.put("/" + key, m);
         databaseReference.updateChildren(childUpdates);
     }
+
+
 }
