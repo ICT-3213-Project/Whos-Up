@@ -28,7 +28,8 @@ public class EventActivity extends Activity {
     private static final String TAG = "AddEventActivity";
 
     String placeName;
-    String placeAddress;
+    double placeLat;
+    double placeLng;
     FirebaseDatabase database;
     DatabaseReference myRef;
     FirebaseUser user;
@@ -60,9 +61,10 @@ public class EventActivity extends Activity {
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
                 placeName = place.getName().toString();
-                placeAddress = place.getAddress().toString();
+                placeLat = place.getLatLng().latitude;
+                placeLng = place.getLatLng().longitude;
                 Log.i(TAG, "Place: " + place.getName());
-                Log.i(TAG, "Address: " + place.getAddress());
+                Log.i(TAG, "LatLng: " + place.getLatLng());
             }
 
             @Override
@@ -91,7 +93,7 @@ public class EventActivity extends Activity {
                 peopleAttending.add(uid);
                 peopleAttending.add("1234");
 
-                Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeAddress, peopleAttending);
+                Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeLat, placeLng, peopleAttending);
 
                 String pushKey = myRef.child("Events").push().getKey();
 
