@@ -10,7 +10,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lightning.structby.whosup.EventActivity"
     android:theme="@android:style/Theme.Material.Light.DarkActionBar">
-    
+
+
+
+
+
+    <!--<fragment-->
+        <!--android:id="@+id/place_autocomplete_fragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"-->
+        <!--android:layout_below="@+id/locationtextView"-->
+        <!--android:layout_marginTop="20dp"/>-->
 
     <TextView
         android:id="@+id/eventNametextView"
@@ -115,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/addbutton"/>
+        android:id="@+id/addbutton"
+        android:background="@color/colorButtonTeal"/>
 
 </RelativeLayout>

@@ -11,22 +11,22 @@
         android:id="@+id/event_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:text="Event Name"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textColor="#000000" />
-
 
     <TextView
         android:id="@+id/event_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_below="@id/event_name"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
         android:text="Event Place"
-        android:textSize="14sp"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/event_date"
@@ -101,5 +101,7 @@
             android:textColor="#fafafa"
             android:gravity="center_vertical|center"/>
     </android.support.v7.widget.CardView>
+
+
 
 </android.support.v7.widget.CardView>
