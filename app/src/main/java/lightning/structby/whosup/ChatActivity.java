@@ -34,7 +34,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private static boolean singleton = false;
     private String eventId;
     private String userId;
     private DatabaseReference databaseReference;
@@ -51,8 +50,10 @@ public class ChatActivity extends AppCompatActivity {
         Button tv = (Button) findViewById(R.id.sendButton);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
-        eventId = "-Kguex6g7urkfKM1lVa0";
-        userId = "yomama@yo.com";
+
+        userId = getIntent().getStringExtra("userId");
+        eventId = getIntent().getStringExtra("eventId");
+
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -50,10 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         users = new ArrayList<>();
         profilePictures = new HashMap<>();
         waitForevent = new HashMap<>();
-        if(!singleton) {
-//            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            singleton = !singleton;
-        }
+
     }
 
 
@@ -89,7 +86,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             else if(waitForevent.get(message.getSenderId()) == null){
                 waitForevent.put(message.getSenderId(), false);
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-                Query query = reference.orderByChild("email").equalTo(message.getSenderId()).limitToFirst(1);
+                Query query = reference.orderByKey().equalTo(message.getSenderId()).limitToFirst(1);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -100,9 +97,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 byte[] imgBytes = Base64.decode(user.getProfileImage(), Base64.NO_WRAP);
                                 Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
                                 BitmapDrawable dp = new BitmapDrawable(context.getResources(), bmp);
-                                profilePictures.put(user.getEmail(), dp);
+                                profilePictures.put(ds.getKey(), dp);
                                 users.add(user);
-                                waitForevent.remove(user.getEmail());
+                                waitForevent.remove(ds.getKey());
                             }
                         }
                     }

@@ -52,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         progressDialog = new ProgressDialog(ProfileActivity.this);

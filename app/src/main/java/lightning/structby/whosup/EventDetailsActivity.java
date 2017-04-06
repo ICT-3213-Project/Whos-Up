@@ -1,5 +1,6 @@
 package lightning.structby.whosup;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -20,6 +21,7 @@ import android.view.*;
 import android.view.GestureDetector;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.vision.text.Text;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +55,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
     private String eventId;
     private String userId;
+    private User userObj;
     private Event event;
     private DatabaseReference databaseReference;
     DatabaseReference userReference;
@@ -68,10 +72,14 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         );
 
         // Get our event
-        userId = getIntent().getStringExtra("userId");
-        eventSnapshot = (new Gson()).fromJson(getIntent().getStringExtra("eventSnapshot"), DataSnapshot.class);
-        event = eventSnapshot.getValue(Event.class);
-        eventId = eventSnapshot.getKey();
+        eventId = getIntent().getStringExtra("eventId");
+        String eventJson  = getIntent().getStringExtra("event");
+        event = (new Gson()).fromJson(eventJson, Event.class);
+
+
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.d("HYHY", userId + "");
+
 
 
         TextView tv = (TextView) findViewById(R.id.event_name);
@@ -81,7 +89,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         tv = (TextView) findViewById(R.id.date_time);
         tv.setText("On " + event.getEventDate() + " at " + event.getEventTime());
         tv = (TextView) findViewById(R.id.description);
-        tv.setText(event.getPlaceName());
+        tv.setText(event.getEventDescription());
         tv = (TextView) findViewById(R.id.people_count);
         String count = ((Integer)event.getPeopleAttendingCount()).toString();
         tv.setText(count);
@@ -196,6 +204,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
     public void openChat(View v){
         Intent i = new Intent(this, ChatActivity.class);
+        i.putExtra("eventId", eventId);
+        i.putExtra("userId", userId);
         startActivity(i);
     }
 
