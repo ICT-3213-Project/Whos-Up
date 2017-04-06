@@ -124,6 +124,10 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                         tv = (TextView) findViewById(R.id.people_count);
                         String count = ((Integer)event.getPeopleAttendingCount()).toString();
                         tv.setText(count);
+                        if(event.getPeopleAttending().contains(userId)){
+                            tv = (TextView) findViewById(R.id.goingText);
+                            tv.setText("Going");
+                        }
                         getEventReference(event);
                     } else {
                         Log.d("HERE", "eeeeeeeeeeeee");
@@ -205,7 +209,9 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
     public void openChat(View v){
         Intent i = new Intent(this, ChatActivity.class);
         i.putExtra("eventId", eventId);
+        //Toast.makeText(getApplicationContext(),eventId,Toast.LENGTH_SHORT).show();
         i.putExtra("userId", userId);
+        i.putExtra("eventName", event.getEventName());
         startActivity(i);
     }
 

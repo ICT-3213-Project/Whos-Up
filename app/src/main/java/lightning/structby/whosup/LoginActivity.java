@@ -46,9 +46,11 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+                    changeActivity();
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
+                    //Toast.makeText(getApplicationContext(),user.toString(),Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
@@ -145,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void changeActivity()
     {
-        finish();
+            finish();
 //        Intent intent = new Intent(this, EventActivity.class);
 //        emailEditText = (EditText)findViewById(R.id.emailLogineditText);
 //        intent.putExtra("userId", emailEditText.getText().toString());

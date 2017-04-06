@@ -51,8 +51,12 @@ public class ChatActivity extends AppCompatActivity {
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
 
+
+
         userId = getIntent().getStringExtra("userId");
         eventId = getIntent().getStringExtra("eventId");
+        String eventName = getIntent().getStringExtra("eventName");
+        getSupportActionBar().setTitle(eventName);
 
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
@@ -69,8 +73,9 @@ public class ChatActivity extends AppCompatActivity {
         );
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
-        databaseReference.orderByChild("eventId").equalTo(eventId);
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        Query query=databaseReference.orderByChild("eventId").equalTo(eventId);
+
+        query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message m = dataSnapshot.getValue(Message.class);
