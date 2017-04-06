@@ -62,7 +62,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean mLocationPermissionGranted;
     private List<Marker> markers;
 
-    private FirebaseDatabase database;
     private DatabaseReference eventref;
     private FirebaseUser firebaseUser;
 
@@ -83,6 +82,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
                 .build();
+
+
+        // Get signed in user
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                RoundedImageView profileImage = (RoundedImageView) findViewById(R.id.profile_image);
+                User user = dataSnapshot.getValue(User.class);
+                String encodedImage = user.getProfileImage();
+                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                profileImage.setImageBitmap(decodedByte);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
@@ -237,14 +256,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void getEvents() {
 
-        database = FirebaseDatabase.getInstance();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         eventref = FirebaseDatabase.getInstance().getReference("Events");
 
         eventref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Clear all events
+                LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
+                cardHolder.removeAllViews();
+                mMap.clear();
                 markers = new ArrayList<>();
+
+                // Get new ones
                 for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
                     Event event = eventSnapshot.getValue(Event.class);
                     Marker marker = mMap.addMarker(new MarkerOptions()
@@ -278,12 +301,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         eventLocation.setLatitude(event.getPlaceLat());
         eventLocation.setLongitude(event.getPlaceLng());
 
-        eventName.setText(event.getEventName());
+        if(event.getEventName()!= null && event.getEventName().length() > 20) {
+            eventName.setText(event.getEventName().substring(0, 19) + "...");
+        } else {
+            eventName.setText(event.getEventName());
+        }
+
         if(event.getPlaceName()!= null && event.getPlaceName().length() > 25) {
             eventPlace.setText(event.getPlaceName().substring(0, 24) + "...");
         } else {
             eventPlace.setText(event.getPlaceName());
         }
+
         eventDate.setText(event.getEventDate());
         eventDist.setText(String.format("%.2f", mLastKnownLocation.distanceTo(eventLocation)/1000) + " km");
 
