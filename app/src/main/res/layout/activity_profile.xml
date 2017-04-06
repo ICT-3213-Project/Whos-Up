@@ -24,15 +24,6 @@
             android:layout_marginTop="100dp"
             android:src="@drawable/ic_keyboard_arrow_left" />
 
-        <ImageView
-            android:id="@+id/drop_down_option_menu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/ic_more_horiz" />
-
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/user_profile_image"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,7 +36,8 @@
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="false"
             android:cropToPadding="false"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:onClick="selectImage"/>
 
         <RelativeLayout
             android:id="@+id/profile_layout"

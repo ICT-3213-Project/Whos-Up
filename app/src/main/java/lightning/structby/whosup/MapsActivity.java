@@ -1,5 +1,6 @@
 package lightning.structby.whosup;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -15,6 +16,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,10 +26,12 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -45,6 +50,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: Don't show events which are behind in time
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -145,6 +151,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Padding for location button
         mMap.setPadding(0, 200, 0, 0);
+
+        mMap.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
+
+        // Marker on click listener
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                int index = markers.indexOf(marker);
+
+                final HorizontalScrollView cardScrollView = (HorizontalScrollView) findViewById(R.id.card_scroll_view);
+                LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
+                final CardView eventCV = (CardView) cardHolder.getChildAt(index);
+
+                cardScrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cardScrollView.smoothScrollTo(eventCV.getLeft(), 0);
+                    }
+                },100);
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                marker.showInfoWindow();
+                return true;
+            }
+        });
+
+        // Info window click: opens event detail actvity
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent i = new Intent(MapsActivity.this, EventDetailsActivity.class);
+                i.putExtra("eventID", marker.getTag().toString());
+                startActivity(i);
+            }
+        });
 
         updateLocationUI();
 
@@ -257,12 +298,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void getEvents() {
 
         eventref = FirebaseDatabase.getInstance().getReference("Events");
+        final LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
 
         eventref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Clear all events
-                LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
                 cardHolder.removeAllViews();
                 mMap.clear();
                 markers = new ArrayList<>();
@@ -272,10 +313,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Event event = eventSnapshot.getValue(Event.class);
                     Marker marker = mMap.addMarker(new MarkerOptions()
                             .position(new LatLng(event.getPlaceLat(), event.getPlaceLng()))
-                            .title(event.getPlaceName()));
+                            .title(event.getEventName())
+                            .snippet(event.getEventDate() + "\n" + event.getEventTime())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    marker.setTag(eventSnapshot.getKey());
 
                     markers.add(marker);
                     generateLayout(event);
+                }
+
+                // Add listeners for cards
+                for(int i=0; i<cardHolder.getChildCount(); i++) {
+                    final int val = i;
+                    cardHolder.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMap.animateCamera(CameraUpdateFactory.newLatLng(markers.get(val).getPosition()));
+                            markers.get(val).showInfoWindow();
+
+                            final HorizontalScrollView cardScrollView = (HorizontalScrollView) findViewById(R.id.card_scroll_view);
+                            cardScrollView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cardScrollView.smoothScrollTo(cardHolder.getChildAt(val).getLeft(), 0);
+                                }
+                            },100);
+                        }
+                    });
                 }
             }
 

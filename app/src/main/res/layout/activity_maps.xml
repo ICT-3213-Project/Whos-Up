@@ -64,9 +64,10 @@
         android:scaleType="centerCrop" />
 
     <HorizontalScrollView
+        android:id="@+id/card_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true" >
 
         <LinearLayout
