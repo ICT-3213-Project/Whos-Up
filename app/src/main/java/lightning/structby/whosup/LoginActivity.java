@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 //        intent.putExtra("userId", emailEditText.getText().toString());
 //        startActivity(intent);
 
-        Intent i = new Intent(this, ProfileActivity.class);
+        Intent i = new Intent(this, EventActivity.class);
         startActivity(i);
     }
 
