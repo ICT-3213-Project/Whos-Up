@@ -48,6 +48,26 @@
         android:id="@+id/passwordLogineditText"
         android:layout_marginTop="16dp"/>
 
+    <TextView
+        android:id="@+id/infotextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/signuptextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:text="Not a member?" />
+
+    <TextView
+        android:text="Sign Up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/loginbutton"
+        android:layout_marginBottom="66dp"
+        android:id="@+id/signuptextView"
+        android:layout_centerHorizontal="true"
+        android:onClick="openSignUp"
+        android:textColor="@color/colorPrimaryTeal"/>
+
     <Button
         android:text="Login"
         android:layout_width="wrap_content"
@@ -58,13 +78,5 @@
         android:id="@+id/loginbutton"
         android:onClick="login"/>
 
-    <TextView
-        android:text="Sign Up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/loginbutton"
-        android:layout_marginBottom="66dp"
-        android:id="@+id/signuptextView"
-        android:layout_centerHorizontal="true"
-        android:onClick="openSignUp"/>
+
 </RelativeLayout>

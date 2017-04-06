@@ -26,15 +26,9 @@
         android:scaleType="centerCrop"
         android:layout_above="@+id/nametextView"
         android:onClick="selectImage"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray"
+        android:layout_alignParentTop="true"/>
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_above="@+id/nametextView"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:id="@+id/profileImageView"/>-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +36,7 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/personNameEditText"
         android:text="Name"
-        android:layout_marginTop="9dp"/>
+        android:layout_marginTop="16dp"/>
 
     <EditText
         android:layout_width="wrap_content"
