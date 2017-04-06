@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
     private String userId;
     private Event event;
     private DatabaseReference databaseReference;
+    private DataSnapshot eventSnapshot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        // Get our event
+        eventSnapshot = (new Gson()).fromJson(getIntent().getStringExtra("eventSnapshot"), DataSnapshot.class);
 
         TextView tv=(TextView)findViewById(R.id.timeicon);
         Typeface face=Typeface.createFromAsset(getAssets(),"fonts/MaterialIcons-Regular.ttf");

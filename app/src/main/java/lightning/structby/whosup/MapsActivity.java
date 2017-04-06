@@ -44,6 +44,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.IOException;
@@ -182,7 +183,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Intent i = new Intent(MapsActivity.this, EventDetailsActivity.class);
-                i.putExtra("eventID", marker.getTag().toString());
+                DataSnapshot eventSnapshot = (DataSnapshot) marker.getTag();
+                i.putExtra("eventSnapshot", (new Gson()).toJson(eventSnapshot));
                 startActivity(i);
             }
         });
@@ -316,7 +318,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .title(event.getEventName())
                             .snippet(event.getEventDate() + "\n" + event.getEventTime())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    marker.setTag(eventSnapshot.getKey());
+                    marker.setTag(eventSnapshot);
 
                     markers.add(marker);
                     generateLayout(event);
