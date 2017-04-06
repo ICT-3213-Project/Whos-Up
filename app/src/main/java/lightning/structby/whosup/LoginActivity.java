@@ -80,8 +80,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view){
-        emailEditText = (EditText)findViewById(R.id.emailLogineditText);
-        passwordEditText = (EditText)findViewById(R.id.passwordLogineditText);
+        emailEditText = (EditText)findViewById(R.id.email);
+        passwordEditText = (EditText)findViewById(R.id.password);
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         signIn(email,password);
@@ -159,8 +159,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        emailEditText = (EditText)findViewById(R.id.emailLogineditText);
-        passwordEditText = (EditText)findViewById(R.id.passwordLogineditText);
+        emailEditText = (EditText)findViewById(R.id.email);
+        passwordEditText = (EditText)findViewById(R.id.password);
 
         String emailString = emailEditText.getText().toString();
         if (TextUtils.isEmpty(emailString) || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailString).matches()) {
