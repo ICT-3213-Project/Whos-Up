@@ -210,6 +210,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         } else {
             RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
             personAttendingImage.setVisibility(View.INVISIBLE);
+
         }
 
         if(event.getPeopleAttendingCount() >= 3) {
