@@ -162,7 +162,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
             });
         } else {
             RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people1);
-            removeView(personAttendingImage);
+//            removeView(personAttendingImage);
         }
 
         if(event.getPeopleAttendingCount() >= 2) {
@@ -190,8 +190,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
             });
 
         } else {
-            RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people2);
-            removeView(personAttendingImage);
+            RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
+//            removeView(personAttendingImage);
         }
 
 //        userReference = FirebaseDatabase.getInstance().getReference("Users");
