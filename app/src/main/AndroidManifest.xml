@@ -16,11 +16,13 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="Who's Up"
+        android:label="Who&apos;s Up"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpActivity" android:label="Register"/>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="Register" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,17 +44,20 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EventActivity" />
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:label="Login">
+        </activity>
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".MainActivity"
+            android:label="Who&apos;s Up">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntroActivity" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".DevNavigation"></activity>
     </application>
 
 </manifest>
