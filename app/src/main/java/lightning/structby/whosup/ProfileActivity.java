@@ -44,7 +44,6 @@ public class ProfileActivity extends AppCompatActivity {
     private Bitmap scaled;
 
 
-    //TODO: Back button
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
