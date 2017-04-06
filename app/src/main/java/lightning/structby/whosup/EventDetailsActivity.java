@@ -54,6 +54,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
     private String userId;
     private Event event;
     private DatabaseReference databaseReference;
+    DatabaseReference userReference;
     private DataSnapshot eventSnapshot;
 
     @Override
@@ -67,9 +68,25 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         );
 
         // Get our event
+        userId = getIntent().getStringExtra("userId");
         eventSnapshot = (new Gson()).fromJson(getIntent().getStringExtra("eventSnapshot"), DataSnapshot.class);
+        event = eventSnapshot.getValue(Event.class);
+        eventId = eventSnapshot.getKey();
 
-        TextView tv=(TextView)findViewById(R.id.timeicon);
+
+        TextView tv = (TextView) findViewById(R.id.event_name);
+        tv.setText(event.getEventName());
+        tv = (TextView) findViewById(R.id.location);
+        tv.setText(event.getPlaceName());
+        tv = (TextView) findViewById(R.id.date_time);
+        tv.setText("On " + event.getEventDate() + " at " + event.getEventTime());
+        tv = (TextView) findViewById(R.id.description);
+        tv.setText(event.getPlaceName());
+        tv = (TextView) findViewById(R.id.people_count);
+        String count = ((Integer)event.getPeopleAttendingCount()).toString();
+        tv.setText(count);
+
+        tv=(TextView)findViewById(R.id.timeicon);
         Typeface face=Typeface.createFromAsset(getAssets(),"fonts/MaterialIcons-Regular.ttf");
         tv.setTypeface(face);
         tv=(TextView)findViewById(R.id.back);
@@ -78,9 +95,6 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         tv.setTypeface(face);
 
         responsiveTiles();
-
-        userId = "Z10z93OdYjaLFelnh4i98XuhQqB3";
-        eventId = "-Kgz6tLEuzAMxu6LB2jQ";
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Events");
         Query query = databaseReference.orderByKey().equalTo(eventId);
@@ -116,6 +130,31 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
         });
 
+//        userReference = FirebaseDatabase.getInstance().getReference("Users");
+//        Query query = userReference.orderByChild("email").equalTo(.getSenderId()).limitToFirst(1);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    User user = ds.getValue(User.class);
+//                    if (user != null) {
+//                        Log.d("SEE", "Received");
+//                        byte[] imgBytes = Base64.decode(user.getProfileImage(), Base64.NO_WRAP);
+//                        Bitmap bmp = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
+//                        BitmapDrawable dp = new BitmapDrawable(context.getResources(), bmp);
+//                        profilePictures.put(user.getEmail(), dp);
+//                        users.add(user);
+//                        waitForevent.remove(user.getEmail());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//
+//        });
     }
 
     @Override
