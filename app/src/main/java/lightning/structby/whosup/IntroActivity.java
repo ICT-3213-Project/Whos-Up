@@ -15,10 +15,10 @@ public class IntroActivity extends AppIntro {
         super.onCreate(savedInstanceState);
 
         // TODO: An images for slides
-        addSlide(AppIntroFragment.newInstance("Welcome!", "Welcome to Who's Up?!", R.drawable.person, Color.parseColor("#79BF28")));
-        addSlide(AppIntroFragment.newInstance("Bored?", "Now you can find fun stuff to do!", R.drawable.person, Color.parseColor("#0DA8F2")));
-        addSlide(AppIntroFragment.newInstance("See what's happening nearby", "Using our super cool map view!", R.drawable.person, Color.parseColor("#4D6A78")));
-        addSlide(AppIntroFragment.newInstance("Get Started", "What are you waiting for?", R.drawable.person, Color.parseColor("#F32622")));
+        addSlide(AppIntroFragment.newInstance("Welcome!", "Welcome to Who's Up?!", R.drawable.defaultdp, Color.parseColor("#79BF28")));
+        addSlide(AppIntroFragment.newInstance("Bored?", "Now you can find fun stuff to do!", R.drawable.defaultdp, Color.parseColor("#0DA8F2")));
+        addSlide(AppIntroFragment.newInstance("See what's happening nearby", "Using our super cool map view!", R.drawable.defaultdp, Color.parseColor("#4D6A78")));
+        addSlide(AppIntroFragment.newInstance("Get Started", "What are you waiting for?", R.drawable.defaultdp, Color.parseColor("#F32622")));
 
         // OPTIONAL METHODS
         // Override bar/separator color.

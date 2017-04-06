@@ -19,6 +19,9 @@ import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -473,6 +476,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
         cardHolder.addView(cardView);
 
+    }
+
+    public void addEvent(View v) {
+        Intent i = new Intent(MapsActivity.this, EventActivity.class);
+        startActivity(i);
     }
 
     public void openProfile(View v) {
