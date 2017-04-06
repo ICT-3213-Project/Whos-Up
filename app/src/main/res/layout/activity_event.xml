@@ -29,48 +29,46 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
+        android:id="@+id/eventNameeditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="Event Name"
-        android:ems="10"
         android:layout_below="@+id/place_autocomplete_fragment"
         android:layout_centerHorizontal="true"
-        android:id="@+id/eventNameeditText"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:inputType="text" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:layout_below="@+id/eventNameeditText"
-        android:layout_alignStart="@+id/eventNameeditText"
-        android:layout_marginTop="45dp"
         android:id="@+id/descriptioneditText"
-        android:text="Description" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:layout_below="@+id/descriptioneditText"
-        android:layout_alignEnd="@+id/descriptioneditText"
+        android:layout_alignStart="@+id/eventNameeditText"
+        android:layout_below="@+id/eventNameeditText"
         android:layout_marginTop="45dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <EditText
         android:id="@+id/dateeditText"
-        android:text="Date" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:layout_below="@+id/dateeditText"
-        android:layout_alignEnd="@+id/dateeditText"
+        android:layout_alignEnd="@+id/descriptioneditText"
+        android:layout_below="@+id/descriptioneditText"
         android:layout_marginTop="45dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="date" />
+
+    <EditText
         android:id="@+id/timeeditText"
-        android:text="Time" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/dateeditText"
+        android:layout_below="@+id/dateeditText"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="time" />
 
     <Button
         android:text="Add"
@@ -79,5 +77,41 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/addbutton"/>
+
+    <TextView
+        android:id="@+id/eventNametextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/place_autocomplete_fragment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Event Name" />
+
+    <TextView
+        android:id="@+id/descriptiontextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventNameeditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Description" />
+
+    <TextView
+        android:id="@+id/datetextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descriptioneditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/timetextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateeditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Time" />
 
 </RelativeLayout>
