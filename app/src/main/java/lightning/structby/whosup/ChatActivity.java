@@ -57,10 +57,7 @@ public class ChatActivity extends AppCompatActivity {
         messages = new ArrayList<>();
         adapter = new MessageAdapter(messages, this, userId);
         recyclerView.setAdapter(adapter);
-        if(!singleton) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            singleton = !singleton;
-        }
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
         databaseReference.orderByChild("eventId").equalTo(eventId);
