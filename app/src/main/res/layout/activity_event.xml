@@ -10,82 +10,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lightning.structby.whosup.EventActivity"
     android:theme="@android:style/Theme.Material.Light.DarkActionBar">
-
-    <TextView
-        android:text="Select Location:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:id="@+id/locationtextView" />
-
-    <fragment
-        android:id="@+id/place_autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-        android:layout_below="@+id/locationtextView"
-        android:layout_marginTop="20dp"/>
-
-    <EditText
-        android:id="@+id/eventNameeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/place_autocomplete_fragment"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/descriptioneditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/eventNameeditText"
-        android:layout_below="@+id/eventNameeditText"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:inputType="textMultiLine" />
-
-    <EditText
-        android:id="@+id/dateeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/descriptioneditText"
-        android:layout_below="@+id/descriptioneditText"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="date" />
-
-    <EditText
-        android:id="@+id/timeeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/dateeditText"
-        android:layout_below="@+id/dateeditText"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="time" />
-
-    <Button
-        android:text="Add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/addbutton"/>
+    
 
     <TextView
         android:id="@+id/eventNametextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/place_autocomplete_fragment"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="13dp"
         android:text="Event Name" />
+
+    <EditText
+        android:id="@+id/eventNameeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:layout_below="@+id/eventNametextView"
+        android:ems="10"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/descriptiontextView"
@@ -96,6 +39,16 @@
         android:layout_marginTop="26dp"
         android:text="Description" />
 
+    <EditText
+        android:id="@+id/descriptioneditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/eventNameeditText"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
     <TextView
         android:id="@+id/datetextView"
         android:layout_width="wrap_content"
@@ -105,6 +58,17 @@
         android:layout_marginTop="26dp"
         android:text="Date" />
 
+    <EditText
+        android:id="@+id/dateeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/descriptioneditText"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="date" />
+
     <TextView
         android:id="@+id/timetextView"
         android:layout_width="wrap_content"
@@ -113,5 +77,44 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:text="Time" />
+
+    <EditText
+        android:id="@+id/timeeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/dateeditText"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="time" />
+
+
+    <TextView
+        android:text="Select Location:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:id="@+id/locationtextView"
+        android:layout_below="@+id/timeeditText"/>
+
+    <EditText
+        android:id="@+id/locationeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/locationtextView"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:focusable="false"/>
+
+    <Button
+        android:text="Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/addbutton"/>
 
 </RelativeLayout>

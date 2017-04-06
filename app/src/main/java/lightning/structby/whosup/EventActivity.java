@@ -2,9 +2,12 @@ package lightning.structby.whosup;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +17,14 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +38,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class EventActivity extends Activity {
+public class EventActivity extends AppCompatActivity {
 
     private static final String TAG = "AddEventActivity";
 
@@ -47,9 +54,12 @@ public class EventActivity extends Activity {
     EditText descriptionEditText;
     EditText dateEditText;
     EditText timeEditText;
+    EditText locationEditText;
 
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
+
+    int PLACE_PICKER_REQUEST = 1;
 
 
     @Override
@@ -64,6 +74,7 @@ public class EventActivity extends Activity {
 
         dateEditText = (EditText)findViewById(R.id.dateeditText);
         timeEditText = (EditText)findViewById(R.id.timeeditText);
+        locationEditText = (EditText)findViewById(R.id.locationeditText);
 
 
         myCalendar = Calendar.getInstance();
@@ -115,26 +126,17 @@ public class EventActivity extends Activity {
             }
         });
 
-
-
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        locationEditText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                placeName = place.getName().toString();
-                placeLat = place.getLatLng().latitude;
-                placeLng = place.getLatLng().longitude;
-                Log.i(TAG, "Place: " + place.getName());
-                Log.i(TAG, "LatLng: " + place.getLatLng());
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build(EventActivity.this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -160,6 +162,10 @@ public class EventActivity extends Activity {
                 peopleAttending.add(uid);
                 peopleAttending.add("1234");
 
+                final ProgressDialog progressDialog = new ProgressDialog(EventActivity.this);
+                progressDialog.setMessage("Creating Event");
+                progressDialog.show();
+
                 Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeLat, placeLng, peopleAttending);
 
                 String pushKey = myRef.child("Events").push().getKey();
@@ -172,15 +178,34 @@ public class EventActivity extends Activity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                         else{
                             Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                     }
                 });
 
             }
         });
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        locationEditText = (EditText)findViewById(R.id.locationeditText);
+
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                locationEditText.setText(place.getName());
+                placeName = place.getName().toString();
+                placeLat = place.getLatLng().latitude;
+                placeLng = place.getLatLng().longitude;
+
+            }
+        }
     }
 
     private void updateLabel() {
@@ -200,11 +225,13 @@ public class EventActivity extends Activity {
         descriptionEditText = (EditText)findViewById(R.id.descriptioneditText);
         dateEditText = (EditText)findViewById(R.id.dateeditText);
         timeEditText = (EditText)findViewById(R.id.timeeditText);
+        locationEditText = (EditText)findViewById(R.id.locationeditText);
 
         String eventNameString = eventNameEditText.getText().toString();
         String descriptionString = descriptionEditText.getText().toString();
         String dateString = dateEditText.getText().toString();
         String timeString = timeEditText.getText().toString();
+        String locationString = locationEditText.getText().toString();
 
 
         if(TextUtils.isEmpty(eventNameString)){
@@ -237,6 +264,14 @@ public class EventActivity extends Activity {
         }
         else {
             timeEditText.setError(null);
+        }
+
+        if(TextUtils.isEmpty(locationString)){
+            locationEditText.setError("Select the event location.");
+            valid = false;
+        }
+        else {
+            locationEditText.setError(null);
         }
 
 
