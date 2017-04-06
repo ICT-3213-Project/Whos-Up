@@ -160,7 +160,6 @@ public class EventActivity extends AppCompatActivity {
 
                 List<String> peopleAttending = new ArrayList<>();
                 peopleAttending.add(uid);
-                peopleAttending.add("1234");
 
                 final ProgressDialog progressDialog = new ProgressDialog(EventActivity.this);
                 progressDialog.setMessage("Creating Event");

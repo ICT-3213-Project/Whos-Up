@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Intent i = new Intent(this, EventDetailsActivity.class);
+        startActivity(i);
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -135,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 //        intent.putExtra("userId", emailEditText.getText().toString());
 //        startActivity(intent);
 
-        Intent i = new Intent(this, EventActivity.class);
+        Intent i = new Intent(this, DevNavigation.class);
         startActivity(i);
     }
 
