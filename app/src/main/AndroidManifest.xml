@@ -20,7 +20,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".SignUpActivity" android:label="Register"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,7 +42,8 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EventActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:label="Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

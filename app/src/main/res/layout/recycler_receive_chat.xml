@@ -10,15 +10,11 @@
                 android:id="@+id/userProfile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@android:color/black"
+                android:background="@drawable/defaultdp"
                 android:elevation="1dp"
                 app:riv_corner_radius="20dip"
                 app:riv_mutate_background="true" />
-            <!--<ImageView-->
-                <!--android:id="@+id/userProfile"-->
-                <!--android:layout_width="40dp"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:background="@drawable/circlular_picture" />-->
+
 
             <TextView android:id="@+id/messageId"
                 android:layout_width="wrap_content"
@@ -29,6 +25,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
+                fontPath="fonts/sfui.ttf"
                 android:paddingBottom="5dp"
                 android:layout_marginBottom="1dp"
                 android:gravity="center_vertical|left"

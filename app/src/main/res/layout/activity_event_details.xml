@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#222222"
                     android:text="@string/eventgoing"
+                    fontPath="fonts/sfui.ttf"
                     android:layout_margin="10dp"
                     android:textSize="24sp"/>
 
@@ -54,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#222222"
+                    fontPath="fonts/sfui.ttf"
                     android:text="@string/eventname"
                     android:layout_margin="10dp"
                     android:textSize="28sp" />
@@ -81,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
                 android:layout_gravity="center_vertical"
+                fontPath="fonts/sfui.ttf"
                 android:layout_margin="10dp"
                 android:textColor="#444444"
                 android:textSize="18sp"
@@ -208,6 +211,7 @@
                                 android:text="Join"
                                 android:layout_marginLeft="3dp"
                                 android:textSize="16sp"
+                                fontPath="fonts/sfui.ttf"
                                 android:textColor="@android:color/darker_gray"
                                 android:gravity="left|bottom"/>
                         </LinearLayout>
@@ -244,6 +248,7 @@
                                 android:textStyle="bold"
                                 android:text="369"
                                 android:textSize="20sp"
+                                fontPath="fonts/sfui.ttf"
                                 android:textColor="#fafafa"
                                 android:gravity="left"/>
 
@@ -252,6 +257,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:text="people"
+                                fontPath="fonts/sfui.ttf"
                                 android:layout_below="@+id/people_count"
                                 android:textSize="16sp"
                                 android:textColor="#fafafa"
