@@ -13,16 +13,17 @@ public class Event {
     private String eventDate;
     private String eventTime;
     private String placeName;
-    private String placeAddress;
+    private double placeLat;
+    private double placeLng;
     private List<String> peopleAttending = new ArrayList<>();
-
-    public Event(String eventName, String eventDescription, String eventDate, String eventTime, String placeName, String placeAddress, List<String> peopleAttending) {
+    public Event(String eventName, String eventDescription, String eventDate, String eventTime, String placeName, double placeLat, double placeLng, List<String> peopleAttending) {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.placeName = placeName;
-        this.placeAddress = placeAddress;
+        this.placeLat = placeLat;
+        this.placeLng = placeLng;
         this.peopleAttending = peopleAttending;
     }
 
@@ -37,12 +38,20 @@ public class Event {
         this.placeName = placeName;
     }
 
-    public String getPlaceAddress() {
-        return placeAddress;
+    public double getPlaceLat() {
+        return placeLat;
     }
 
-    public void setPlaceAddress(String placeAddress) {
-        this.placeAddress = placeAddress;
+    public void setPlaceLat(double placeLat) {
+        this.placeLat = placeLat;
+    }
+
+    public double getPlaceLng() {
+        return placeLng;
+    }
+
+    public void setPlaceLng(double placeLng) {
+        this.placeLng = placeLng;
     }
 
     public String getEventName() {
