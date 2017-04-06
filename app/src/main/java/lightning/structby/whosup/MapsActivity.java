@@ -2,6 +2,9 @@ package lightning.structby.whosup;
 
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +12,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -22,6 +30,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +39,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -45,9 +60,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLastKnownLocation;
     private GoogleApiClient mGoogleApiClient;
     private boolean mLocationPermissionGranted;
+    private List<Marker> markers;
 
     private FirebaseDatabase database;
-    private DatabaseReference userRef;
+    private DatabaseReference eventref;
     private FirebaseUser firebaseUser;
 
 
@@ -159,6 +175,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(mLastKnownLocation.getLatitude(),
                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+            // Set "Events around you in.."
+            TextView personCity = (TextView) findViewById(R.id.person_city);
+            Geocoder geocoder = new Geocoder(this);
+            try {
+                personCity.setText(geocoder.getFromLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude(), 1).get(0).getLocality());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
             Log.d(TAG, "Current location is null. Using defaults.");
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
@@ -213,22 +239,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         database = FirebaseDatabase.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = FirebaseDatabase.getInstance().getReference("Events");
+        eventref = FirebaseDatabase.getInstance().getReference("Events");
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        eventref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                markers = new ArrayList<>();
                 for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
-                    try {
-                        Event event = eventSnapshot.getValue(Event.class);
-                        mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(event.getPlaceLat(), event.getPlaceLng()))
-                                .title(event.getPlaceName()));
+                    Event event = eventSnapshot.getValue(Event.class);
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(event.getPlaceLat(), event.getPlaceLng()))
+                            .title(event.getPlaceName()));
 
-                    } catch(Exception e) {
-                        Log.e("Maps: ", e.toString());
-                    }
-
+                    markers.add(marker);
+                    generateLayout(event);
                 }
             }
 
@@ -237,6 +261,102 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+    }
+
+    private void generateLayout(Event event) {
+        CardView cardView = (CardView) getLayoutInflater().inflate(R.layout.map_event_fragment, null);
+        RelativeLayout.LayoutParams cardViewLP = new RelativeLayout.LayoutParams(375, 500);
+        cardViewLP.setMargins(30, 0, 0, 0);
+        cardView.setLayoutParams(cardViewLP);
+
+        TextView eventName = (TextView) cardView.findViewById(R.id.event_name);
+        TextView eventPlace = (TextView) cardView.findViewById(R.id.event_place);
+        TextView eventDate = (TextView) cardView.findViewById(R.id.event_date);
+        TextView eventDist = (TextView) cardView.findViewById(R.id.event_dist);
+
+        Location eventLocation = new Location("");
+        eventLocation.setLatitude(event.getPlaceLat());
+        eventLocation.setLongitude(event.getPlaceLng());
+
+        eventName.setText(event.getEventName());
+        if(event.getPlaceName()!= null && event.getPlaceName().length() > 25) {
+            eventPlace.setText(event.getPlaceName().substring(0, 24) + "...");
+        } else {
+            eventPlace.setText(event.getPlaceName());
+        }
+        eventDate.setText(event.getEventDate());
+        eventDist.setText(String.format("%.2f", mLastKnownLocation.distanceTo(eventLocation)/1000) + " km");
+
+
+        //Fall-through ifs
+        if(event.getPeopleAttendingCount() >= 1) {
+            final RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people1);
+            String uid = event.getPeopleAttending().get(0);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    if(user != null) {
+                        String encodedImage = user.getProfileImage();
+                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        personAttendingImage.setImageBitmap(decodedByte);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people1);
+            cardView.removeView(personAttendingImage);
+        }
+
+        if(event.getPeopleAttendingCount() >= 2) {
+            final RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people2);
+            String uid = event.getPeopleAttending().get(1);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    if(user != null) {
+                        String encodedImage = user.getProfileImage();
+                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        personAttendingImage.setImageBitmap(decodedByte);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        } else {
+            RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people2);
+            cardView.removeView(personAttendingImage);
+        }
+
+        if(event.getPeopleAttendingCount() > 2) {
+            CardView peopleAttendingCV = (CardView) cardView.findViewById(R.id.card_view_inner);
+            TextView peopleCountTV = (TextView) peopleAttendingCV.findViewById(R.id.people_count);
+            peopleCountTV.setText("+" + (event.getPeopleAttendingCount()-2));
+        } else {
+            CardView peopleAttendingCV = (CardView) cardView.findViewById(R.id.card_view_inner);
+            cardView.removeView(peopleAttendingCV);
+        }
+
+        LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
+        cardHolder.addView(cardView);
+
     }
 
 

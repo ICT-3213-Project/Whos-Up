@@ -158,7 +158,6 @@ public class EventActivity extends Activity {
 
                 List<String> peopleAttending = new ArrayList<>();
                 peopleAttending.add(uid);
-                peopleAttending.add("1234");
 
                 Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeLat, placeLng, peopleAttending);
 
