@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -184,7 +185,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onInfoWindowClick(Marker marker) {
                 Intent i = new Intent(MapsActivity.this, EventDetailsActivity.class);
                 DataSnapshot eventSnapshot = (DataSnapshot) marker.getTag();
-                i.putExtra("eventSnapshot", (new Gson()).toJson(eventSnapshot));
+                Event event = eventSnapshot.getValue(Event.class);
+                String eventJson = (new Gson()).toJson(event);
+                i.putExtra("event", eventJson);
+                i.putExtra("eventId", eventSnapshot.getKey());
                 startActivity(i);
             }
         });
@@ -354,7 +358,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void generateLayout(Event event) {
         CardView cardView = (CardView) getLayoutInflater().inflate(R.layout.map_event_fragment, null);
-        RelativeLayout.LayoutParams cardViewLP = new RelativeLayout.LayoutParams(375, 500);
+
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+
+        RelativeLayout.LayoutParams cardViewLP = new RelativeLayout.LayoutParams(width, height);
         cardViewLP.setMargins(30, 0, 0, 0);
         cardView.setLayoutParams(cardViewLP);
 

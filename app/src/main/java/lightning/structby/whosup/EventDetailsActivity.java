@@ -67,7 +67,9 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         );
 
         // Get our event
-        eventSnapshot = (new Gson()).fromJson(getIntent().getStringExtra("eventSnapshot"), DataSnapshot.class);
+        eventId = getIntent().getStringExtra("eventId");
+        String eventJson  = getIntent().getStringExtra("event");
+        event = (new Gson()).fromJson(eventJson, Event.class);
 
         TextView tv=(TextView)findViewById(R.id.timeicon);
         Typeface face=Typeface.createFromAsset(getAssets(),"fonts/MaterialIcons-Regular.ttf");
