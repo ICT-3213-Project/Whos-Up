@@ -54,14 +54,15 @@
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:id="@+id/profile_image"
-        android:src="@drawable/person"
+        android:src="@drawable/defaultdp"
         app:riv_corner_radius_bottom_left="10dip"
         app:riv_mutate_background="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:onClick="openProfile"/>
 
     <HorizontalScrollView
         android:id="@+id/card_scroll_view"

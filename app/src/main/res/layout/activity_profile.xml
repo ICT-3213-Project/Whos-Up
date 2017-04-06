@@ -22,7 +22,8 @@
             android:layout_height="30dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="100dp"
-            android:src="@drawable/ic_keyboard_arrow_left" />
+            android:src="@drawable/ic_keyboard_arrow_left"
+            android:onClick="goBack"/>
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/user_profile_image"

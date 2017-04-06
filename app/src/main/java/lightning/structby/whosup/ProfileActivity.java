@@ -50,9 +50,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Show in
+
         database = FirebaseDatabase.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         progressDialog = new ProgressDialog(ProfileActivity.this);
@@ -153,6 +154,10 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void goBack(View view) {
+        this.finish();
     }
 
 

@@ -56,8 +56,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
     private String eventId;
     private String userId;
     private User userObj;
-    private Event event;
     private DatabaseReference databaseReference;
+    Event event;
     DatabaseReference userReference;
     private DataSnapshot eventSnapshot;
 
@@ -71,42 +71,22 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                 .build()
         );
 
-        // Get our event
-        eventId = getIntent().getStringExtra("eventId");
-        String eventJson  = getIntent().getStringExtra("event");
-        event = (new Gson()).fromJson(eventJson, Event.class);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        TextView tv = (TextView) findViewById(R.id.event_name);
-        tv.setText(event.getEventName());
-        tv = (TextView) findViewById(R.id.location);
-        tv.setText(event.getPlaceName());
-        tv = (TextView) findViewById(R.id.date_time);
-        tv.setText("On " + event.getEventDate() + " at " + event.getEventTime());
-        tv = (TextView) findViewById(R.id.description);
-        tv.setText(event.getEventDescription());
-        tv = (TextView) findViewById(R.id.people_count);
-        String count = ((Integer)event.getPeopleAttendingCount()).toString();
-        tv.setText(count);
+        // Get our event
+        eventId = getIntent().getStringExtra("eventId");
 
-        tv=(TextView)findViewById(R.id.timeicon);
-        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/MaterialIcons-Regular.ttf");
-        tv.setTypeface(face);
-        tv=(TextView)findViewById(R.id.back);
-        tv.setTypeface(face);
-        tv=(TextView)findViewById(R.id.bookmark);
-        tv.setTypeface(face);
+        // Get catched event
+        populateCachedEvent();
 
         responsiveTiles();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Events");
-        Query query = databaseReference.orderByKey().equalTo(eventId);
-        query.addValueEventListener(new ValueEventListener() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Events").child(eventId);
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Event event = ds.getValue(Event.class);
+                    Event event = dataSnapshot.getValue(Event.class);
                     if (event != null) {
                         Log.d("HERE", "ee");
                         TextView tv = (TextView) findViewById(R.id.event_name);
@@ -125,11 +105,17 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                             tv.setText("Going");
                         }
                         getEventReference(event);
-                    } else {
-                        Log.d("HERE", "eeeeeeeeeeeee");
+
+
+                        populateNewImages();
                     }
+
+
+
                 }
-            }
+
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -138,61 +124,6 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
         });
 
-        if(event.getPeopleAttendingCount() >= 1) {
-            final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people1);
-            String uid = event.getPeopleAttending().get(0);
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
-
-            userRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    if(user != null) {
-                        String encodedImage = user.getProfileImage();
-                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        personAttendingImage.setImageBitmap(decodedByte);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        } else {
-            RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people1);
-            removeView(personAttendingImage);
-        }
-
-        if(event.getPeopleAttendingCount() >= 2) {
-            final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
-            String uid = event.getPeopleAttending().get(1);
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
-
-            userRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    if(user != null) {
-                        String encodedImage = user.getProfileImage();
-                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        personAttendingImage.setImageBitmap(decodedByte);
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        } else {
-            RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people2);
-            removeView(personAttendingImage);
-        }
 
 //        userReference = FirebaseDatabase.getInstance().getReference("Users");
 //        Query query = userReference.orderByChild("email").equalTo(.getSenderId()).limitToFirst(1);
@@ -220,6 +151,120 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 //
 //        });
 
+    }
+
+    private void populateNewImages() {
+        if(event.getPeopleAttendingCount() >= 1) {
+            final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people1);
+            String uid = event.getPeopleAttending().get(0);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    if(user != null) {
+                        String encodedImage = user.getProfileImage();
+                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        personAttendingImage.setImageBitmap(decodedByte);
+                        personAttendingImage.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people1);
+            personAttendingImage.setVisibility(View.INVISIBLE);
+        }
+
+        if(event.getPeopleAttendingCount() >= 2) {
+            final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
+            String uid = event.getPeopleAttending().get(1);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    if(user != null) {
+                        String encodedImage = user.getProfileImage();
+                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        personAttendingImage.setImageBitmap(decodedByte);
+                        personAttendingImage.setVisibility(View.VISIBLE);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        } else {
+            RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
+            personAttendingImage.setVisibility(View.INVISIBLE);
+        }
+
+        if(event.getPeopleAttendingCount() >= 3) {
+            final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people3);
+            String uid = event.getPeopleAttending().get(2);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    if(user != null) {
+                        String encodedImage = user.getProfileImage();
+                        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        personAttendingImage.setImageBitmap(decodedByte);
+                        personAttendingImage.setVisibility(View.VISIBLE);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        } else {
+            RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people3);
+            personAttendingImage.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void populateCachedEvent() {
+        String eventJson  = getIntent().getStringExtra("event");
+        Event event = (new Gson()).fromJson(eventJson, Event.class);
+        TextView tv = (TextView) findViewById(R.id.event_name);
+        tv.setText(event.getEventName());
+        tv = (TextView) findViewById(R.id.location);
+        tv.setText(event.getPlaceName());
+        tv = (TextView) findViewById(R.id.date_time);
+        tv.setText("On " + event.getEventDate() + " at " + event.getEventTime());
+        tv = (TextView) findViewById(R.id.description);
+        tv.setText(event.getEventDescription());
+        tv = (TextView) findViewById(R.id.people_count);
+        String count = ((Integer)event.getPeopleAttendingCount()).toString();
+        tv.setText(count);
+
+        tv=(TextView)findViewById(R.id.timeicon);
+        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/MaterialIcons-Regular.ttf");
+        tv.setTypeface(face);
+        tv=(TextView)findViewById(R.id.back);
+        tv.setTypeface(face);
+        tv=(TextView)findViewById(R.id.bookmark);
+        tv.setTypeface(face);
     }
 
     @Override
@@ -280,7 +325,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("/" + eventId + "/peopleAttending", event.getPeopleAttending());
+        map.put("peopleAttending", event.getPeopleAttending());
         databaseReference.updateChildren(map);
 
 

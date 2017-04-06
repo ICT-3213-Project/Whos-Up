@@ -1,5 +1,6 @@
 package lightning.structby.whosup;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Geocoder;
 import android.location.Location;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -51,6 +53,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //TODO: Don't show events which are behind in time
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -59,6 +62,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final float DEFAULT_ZOOM = 17;
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+
+    ProgressDialog progressDialog;
 
     private GoogleMap mMap;
     private static final String TAG = MapsActivity.class.getSimpleName();
@@ -78,6 +83,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        progressDialog = new ProgressDialog(MapsActivity.this);
+        progressDialog.setMessage("Retrieving");
+        progressDialog.show();
 
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -104,6 +113,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 profileImage.setImageBitmap(decodedByte);
+
+                // Hide the loading screen
+                progressDialog.hide();
+
             }
 
             @Override
@@ -460,6 +473,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LinearLayout cardHolder = (LinearLayout) findViewById(R.id.card_holder);
         cardHolder.addView(cardView);
 
+    }
+
+    public void openProfile(View v) {
+        Intent i = new Intent(MapsActivity.this, ProfileActivity.class);
+        startActivity(i);
     }
 
 
