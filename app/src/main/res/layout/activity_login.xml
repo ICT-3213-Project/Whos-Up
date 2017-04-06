@@ -11,26 +11,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="8">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Welcome back,"
             android:textColor="#333333"
-            android:paddingTop="30dp"
+            fontPath="fonts/sfui.ttf"
+            android:paddingTop="20dp"
             android:paddingBottom="10dp"
             android:layout_gravity="bottom"
-            android:textSize="40sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="sign in to continue"
             android:textColor="#777777"
-            android:paddingBottom="30dp"
-            android:textSize="40sp"
+            android:paddingBottom="20dp"
+            fontPath="fonts/sfui.ttf"
+            android:textSize="30sp"
             android:layout_gravity="top" />
 
     </LinearLayout>
@@ -43,10 +44,11 @@
         android:inputType="textEmailAddress"
         android:paddingTop="20dp"
         android:textSize="20sp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
+        fontPath="fonts/sfui.ttf"
         android:paddingBottom="10dp"
         android:hint="E-mail"
-        android:layout_weight="2"/>
+/>
 
     <EditText
         android:id="@+id/passwordLogineditText"
@@ -57,8 +59,8 @@
         android:textSize="20sp"
         android:paddingTop="10dp"
         android:paddingBottom="20dp"
-        android:hint="Password"
-        android:layout_weight="2"/>
+        fontPath="fonts/sfui.ttf"
+        android:hint="Password" />
 
 
     <Button
@@ -67,25 +69,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
+        fontPath="fonts/sfui.ttf"
         android:paddingLeft="0dp"
         android:textSize="30sp"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_blue_dark"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:text="Login"
-        android:layout_weight="6"
         android:onClick="login"/>
 
     <LinearLayout
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1">
+        android:layout_height="40dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            fontPath="fonts/sfui.ttf"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:text="Don't have an account? "/>
@@ -95,6 +97,7 @@
             android:text="Sign Up"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            fontPath="fonts/sfui.ttf"
             android:clickable="true"
             android:textSize="20sp"
             android:layout_gravity="center"

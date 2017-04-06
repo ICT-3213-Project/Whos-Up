@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -74,6 +75,11 @@ public class SignUpActivity extends AppCompatActivity {
             }
         };
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/sfui.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -102,6 +108,10 @@ public class SignUpActivity extends AppCompatActivity {
         String descriptionString = description.getText().toString();
         createAccount(emailString,passwordString,descriptionString);
 
+    }
+
+    public  void openSignIn(View v){
+        finish();
     }
 
     public void createAccount(final String email, String password, final String shortBio){

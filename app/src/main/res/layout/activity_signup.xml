@@ -13,7 +13,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_weight="4"
         android:layout_marginBottom="30dp">
 
         <LinearLayout
@@ -27,38 +26,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hello!"
-                android:textSize="40sp"
+                fontPath="fonts/sfui.ttf"
+                android:textSize="35sp"
+                android:paddingBottom="5dp"
                 android:textColor="#222222"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Create an account to continue"/>
+                android:textSize="21sp"
+                fontPath="fonts/sfui.ttf"
+                android:text="Create an account"/>
         </LinearLayout>
 
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profileImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"
+            app:riv_corner_radius_bottom_left="10dp"
+            app:riv_corner_radius_bottom_right="10dp"
+            app:riv_corner_radius_top_left="10dp"
+            app:riv_corner_radius_top_right="10dp"
             android:onClick="selectImage"
-            android:background="@drawable/register_profile_picture"
+            app:riv_mutate_background="true"
+            android:background="@drawable/defaultdp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            />
-        <!--<com.makeramen.roundedimageview.RoundedImageView-->
-            <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-            <!--android:layout_width="100dp"-->
-            <!--android:layout_height="100dp"-->
-            <!--app:riv_corner_radius_bottom_left="20dp"-->
-            <!--app:riv_corner_radius_bottom_right="20dp"-->
-            <!--app:riv_corner_radius_top_left="20dp"-->
-            <!--app:riv_corner_radius_top_right="20dp"-->
-            <!--android:onClick="selectImage"-->
-            <!--android:background="@android:color/holo_blue_dark"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentBottom="true"/>-->
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 
@@ -68,11 +62,11 @@
         android:id="@+id/personNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:background="@android:color/transparent"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:layout_weight="2"
+        android:paddingBottom="10dp"
+        fontPath="fonts/sfui.ttf"
         android:hint="Name"
         android:textSize="20sp"/>
 
@@ -84,9 +78,9 @@
         android:textSize="20sp"
         android:id="@+id/emailEditText"
         android:background="@android:color/transparent"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:layout_weight="2"
+        android:paddingBottom="10dp"
+        fontPath="fonts/sfui.ttf"
         android:hint="E-mail"/>
 
     <EditText
@@ -96,9 +90,9 @@
         android:inputType="textPassword"
         android:textSize="20sp"
         android:hint="Password"
-        android:paddingBottom="10dp"
+        fontPath="fonts/sfui.ttf"
         android:paddingTop="10dp"
-        android:layout_weight="2"
+        android:paddingBottom="10dp"
         android:background="@android:color/transparent"/>
 
 
@@ -106,12 +100,12 @@
         android:id="@+id/descriptioneditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences"
         android:textSize="20sp"
         android:hint="Short Description"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:layout_weight="2"
+        android:paddingBottom="10dp"
+        fontPath="fonts/sfui.ttf"
         android:background="@android:color/transparent"/>
 
     <Button
@@ -121,9 +115,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="30dp"
-        android:layout_weight="4"
         android:textAllCaps="false"
         android:textSize="25sp"
+        fontPath="fonts/sfui.ttf"
         android:paddingLeft="0dp"
         android:textColor="@android:color/holo_blue_dark"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -133,14 +127,14 @@
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:layout_height="40dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            fontPath="fonts/sfui.ttf"
             android:layout_gravity="center"
             android:text="Already have an account? "/>
 
@@ -150,7 +144,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:textSize="20sp"
+            fontPath="fonts/sfui.ttf"
+            android:textSize="18sp"
             android:layout_gravity="center"
             android:textColor="@android:color/holo_blue_dark"
             android:onClick="openSignIn"/>

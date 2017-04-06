@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class ChatActivity extends AppCompatActivity {
 
     private static boolean singleton = false;
@@ -58,6 +61,11 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageAdapter(messages, this, userId);
         recyclerView.setAdapter(adapter);
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/sfui.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Message");
         databaseReference.orderByChild("eventId").equalTo(eventId);
@@ -114,5 +122,9 @@ public class ChatActivity extends AppCompatActivity {
         databaseReference.updateChildren(childUpdates);
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
 }
