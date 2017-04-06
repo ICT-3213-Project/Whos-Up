@@ -54,7 +54,10 @@ import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -88,6 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         progressDialog = new ProgressDialog(MapsActivity.this);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Retrieving");
         progressDialog.show();
 
@@ -333,15 +337,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Get new ones
                 for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
                     Event event = eventSnapshot.getValue(Event.class);
-                    Marker marker = mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(event.getPlaceLat(), event.getPlaceLng()))
-                            .title(event.getEventName())
-                            .snippet(event.getEventDate() + "\n" + event.getEventTime())
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                    marker.setTag(eventSnapshot);
 
-                    markers.add(marker);
-                    generateLayout(event);
+                    if(validateEvent(event)) {
+                        Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(event.getPlaceLat(), event.getPlaceLng()))
+                                .title(event.getEventName())
+                                .snippet(event.getEventDate() + "\n" + event.getEventTime())
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                        marker.setTag(eventSnapshot);
+
+                        markers.add(marker);
+                        generateLayout(event);
+                    }
+
                 }
 
                 // Add listeners for cards
@@ -370,6 +378,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+    }
+
+    private boolean validateEvent(Event event) {
+        try {
+            // Check date & time
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date eventDate = sdf.parse(event.getEventDate() + " " + event.getEventTime());
+            if(new Date().after(eventDate)) {
+                return false;
+            }
+
+            // Check distance (set to max 100 km)
+            Location eventLocation = new Location("");
+            eventLocation.setLatitude(event.getPlaceLat());
+            eventLocation.setLongitude(event.getPlaceLng());
+            if(mLastKnownLocation.distanceTo(eventLocation)/1000 > 100) {
+                return false;
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     private void generateLayout(Event event) {
