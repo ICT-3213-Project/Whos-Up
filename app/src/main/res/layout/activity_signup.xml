@@ -49,6 +49,9 @@
             app:riv_corner_radius_top_left="10dp"
             app:riv_corner_radius_top_right="10dp"
             android:onClick="selectImage"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
             app:riv_mutate_background="true"
             android:background="@drawable/defaultdp"
             android:layout_alignParentRight="true"
@@ -146,7 +149,8 @@
             fontPath="fonts/sfui.ttf"
             android:textSize="18sp"
             android:layout_gravity="center"
-            android:onClick="openSignIn"/>
+            android:onClick="openSignIn"
+            android:textColor="@color/colorPrimaryTeal"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -265,6 +265,10 @@ public class SignUpActivity extends AppCompatActivity {
             description.setError(null);
         }
 
+        if(scaled == null)
+            Toast.makeText(SignUpActivity.this, "Please use a profile image!", Toast.LENGTH_SHORT).show();
+            valid = false;
+
 
         return valid;
     }
