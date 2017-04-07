@@ -1,6 +1,7 @@
 package lightning.structby.whosup;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -70,6 +74,12 @@ public class ProfileActivity extends AppCompatActivity {
             shortBio.setEnabled(false);
             profileImage.setEnabled(false);
         }
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/sfui.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -136,6 +146,10 @@ public class ProfileActivity extends AppCompatActivity {
         Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
         gallIntent.setType("image/*");
         startActivityForResult(Intent.createChooser(gallIntent, "Select Profile Picture"), PICK_IMAGE);
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
