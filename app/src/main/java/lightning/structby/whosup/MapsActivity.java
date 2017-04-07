@@ -444,7 +444,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Fall-through ifs
         if(event.getPeopleAttendingCount() >= 1) {
             final RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people1);
-            String uid = event.getPeopleAttending().get(0);
+            List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {
@@ -471,7 +472,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(event.getPeopleAttendingCount() >= 2) {
             final RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people2);
-            String uid = event.getPeopleAttending().get(1);
+            List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {

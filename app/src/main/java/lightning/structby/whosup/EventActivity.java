@@ -1,6 +1,5 @@
 package lightning.structby.whosup;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,28 +19,20 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.HashMap;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -175,8 +165,8 @@ public class EventActivity extends AppCompatActivity {
                 String dateString = dateEditText.getText().toString();
                 String timeString = timeEditText.getText().toString();
 
-                List<String> peopleAttending = new ArrayList<>();
-                peopleAttending.add(uid);
+                HashMap<String, String> peopleAttending = new HashMap<String, String>();
+                peopleAttending.put(uid, uid);
 
                 final ProgressDialog progressDialog = new ProgressDialog(EventActivity.this);
                 progressDialog.setMessage("Creating Event");
@@ -185,8 +175,6 @@ public class EventActivity extends AppCompatActivity {
                 final Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeLat, placeLng, peopleAttending);
 
                 final String pushKey = myRef.child("Events").push().getKey();
-
-                myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(peopleAttending);
 
                 myRef.child("Events").child(pushKey).setValue(newEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

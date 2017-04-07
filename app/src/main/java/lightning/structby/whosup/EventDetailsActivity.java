@@ -41,7 +41,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -100,7 +102,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                         tv = (TextView) findViewById(R.id.people_count);
                         String count = ((Integer)event.getPeopleAttendingCount()).toString();
                         tv.setText(count);
-                        if(event.getPeopleAttending().contains(userId)){
+                        if(event.getPeopleAttending().containsKey(userId)){
                             tv = (TextView) findViewById(R.id.goingText);
                             tv.setText("Going");
                         }
@@ -156,7 +158,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
     private void populateNewImages() {
         if(event.getPeopleAttendingCount() >= 1) {
             final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people1);
-            String uid = event.getPeopleAttending().get(0);
+            List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {
@@ -184,7 +187,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
         if(event.getPeopleAttendingCount() >= 2) {
             final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
-            String uid = event.getPeopleAttending().get(1);
+            List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {
@@ -215,7 +219,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
         if(event.getPeopleAttendingCount() >= 3) {
             final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people3);
-            String uid = event.getPeopleAttending().get(2);
+            List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {
@@ -316,7 +321,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
     public void joinEvent(View v){
         TextView tv = (TextView) findViewById(R.id.goingText);
-        if(event.getPeopleAttending().contains(userId)){
+        if(event.getPeopleAttending().containsKey(userId)){
             event.removePerson(userId);
             tv.setText("Join");
         }

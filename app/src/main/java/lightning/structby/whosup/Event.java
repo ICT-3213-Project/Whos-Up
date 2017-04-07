@@ -1,7 +1,7 @@
 package lightning.structby.whosup;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by azwreith on 4/5/17.
@@ -15,8 +15,8 @@ public class Event {
     private String placeName;
     private double placeLat;
     private double placeLng;
-    private List<String> peopleAttending = new ArrayList<>();
-    public Event(String eventName, String eventDescription, String eventDate, String eventTime, String placeName, double placeLat, double placeLng, List<String> peopleAttending) {
+    private HashMap<String, String> peopleAttending = new HashMap<>();
+    public Event(String eventName, String eventDescription, String eventDate, String eventTime, String placeName, double placeLat, double placeLng, HashMap<String, String> peopleAttending) {
         this.eventName = eventName;
         this.eventDescription = eventDescription;
         this.eventDate = eventDate;
@@ -86,11 +86,11 @@ public class Event {
         this.eventTime = eventTime;
     }
 
-    public List<String> getPeopleAttending() {
+    public HashMap<String, String> getPeopleAttending() {
         return peopleAttending;
     }
 
-    public void setPeopleAttending(List<String> peopleAttending) {
+    public void setPeopleAttending(HashMap<String, String> peopleAttending) {
         this.peopleAttending = peopleAttending;
     }
 
@@ -99,7 +99,7 @@ public class Event {
     }
 
     public void addPerson(String userId){
-        peopleAttending.add(userId);
+        peopleAttending.put(userId, userId);
     }
 
     public void removePerson(String userId){
