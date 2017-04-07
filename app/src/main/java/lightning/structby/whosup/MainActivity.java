@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         //  If the activity has never started before...
         if (isFirstStart) {
-
+            finish();
             //  Launch app intro
             Intent i = new Intent(MainActivity.this, IntroActivity.class);
             startActivity(i);
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
             //  Apply changes
             e.apply();
-            finish();
+
         } else {
             mAuth = FirebaseAuth.getInstance();
 
