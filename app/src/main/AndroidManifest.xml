@@ -43,7 +43,8 @@
             android:label="Details" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity"
-            android:label="Profile"/>
+            android:label="Profile"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".EventActivity"
             android:label="Create Event"/>
         <activity

@@ -524,6 +524,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void openProfile(View v) {
         Intent i = new Intent(MapsActivity.this, ProfileActivity.class);
+        i.putExtra("profileId", firebaseUser.getUid());
         startActivity(i);
     }
 
