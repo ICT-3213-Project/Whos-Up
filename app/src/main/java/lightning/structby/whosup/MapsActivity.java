@@ -383,7 +383,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean validateEvent(Event event) {
         try {
             // Check date & time
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
             Date eventDate = sdf.parse(event.getEventDate() + " " + event.getEventTime());
             if(new Date().after(eventDate)) {
                 return false;
