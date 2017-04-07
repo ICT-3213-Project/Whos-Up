@@ -21,9 +21,9 @@ public class IntroActivity extends AppIntro {
 
         // TODO: An images for slides
         addSlide(AppIntroFragment.newInstance("Welcome!", "Welcome to Who's Up!", R.drawable.logo, Color.parseColor("#79BF28")));
-        addSlide(AppIntroFragment.newInstance("Bored?", "Now you can find fun stuff to do!", R.drawable.logo, Color.parseColor("#0DA8F2")));
-        addSlide(AppIntroFragment.newInstance("See what's happening nearby", "Using our super cool map view!", R.drawable.logo, Color.parseColor("#4D6A78")));
-        addSlide(AppIntroFragment.newInstance("Get Started", "What are you waiting for?", R.drawable.logo, Color.parseColor("#F32622")));
+        addSlide(AppIntroFragment.newInstance("Bored?", "Now you can find fun stuff to do!", R.drawable.fun, Color.parseColor("#0DA8F2")));
+        addSlide(AppIntroFragment.newInstance("See what's happening nearby", "Using our super cool map view!", R.drawable.map, Color.parseColor("#4D6A78")));
+        addSlide(AppIntroFragment.newInstance("Get Started", "What are you waiting for?", R.drawable.rocket, Color.parseColor("#F32622")));
 
         // OPTIONAL METHODS
         // Override bar/separator color.
