@@ -1,132 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_event"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:padding="25dp"
     tools:context="lightning.structby.whosup.EventActivity"
     android:theme="@android:style/Theme.Material.Light.DarkActionBar">
 
 
 
 
-
-    <!--<fragment-->
-        <!--android:id="@+id/place_autocomplete_fragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"-->
-        <!--android:layout_below="@+id/locationtextView"-->
-        <!--android:layout_marginTop="20dp"/>-->
-
-    <TextView
-        android:id="@+id/eventNametextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:text="Event Name" />
-
-    <EditText
-        android:id="@+id/eventNameeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
-        android:layout_below="@+id/eventNametextView"
-        android:ems="10"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/descriptiontextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/eventNameeditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:text="Description" />
-
-    <EditText
-        android:id="@+id/descriptioneditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/eventNameeditText"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:inputType="textMultiLine" />
-
-    <TextView
-        android:id="@+id/datetextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/descriptioneditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:text="Date" />
-
-    <EditText
-        android:id="@+id/dateeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/descriptioneditText"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="date" />
-
-    <TextView
-        android:id="@+id/timetextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dateeditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:text="Time" />
-
-    <EditText
-        android:id="@+id/timeeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/dateeditText"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="time" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:textColor="#222222"
+            android:layout_marginTop="10dp"
+            fontPath="fonts/sfui.ttf"
+            android:text="Easy,"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="just give the details"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="40dp"
+            fontPath="fonts/sfui.ttf"
+            android:textSize="25sp"/>
 
 
-    <TextView
-        android:text="Select Location:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:id="@+id/locationtextView"
-        android:layout_below="@+id/timeeditText"/>
+        <EditText
+            android:id="@+id/eventNameeditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            fontPath="fonts/sfui.ttf"
+            android:background="@android:color/transparent"
+            android:hint="Event Name"
+            android:inputType="textCapWords" />
 
-    <EditText
-        android:id="@+id/locationeditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/locationtextView"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:focusable="false"/>
+        <EditText
+            android:id="@+id/descriptioneditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@android:color/transparent"
+            fontPath="fonts/sfui.ttf"
+            android:hint="Description"
+            android:inputType="textCapSentences" />
 
-    <Button
-        android:text="Add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/addbutton"
-        android:background="@color/colorButtonTeal"/>
+        <TextView
+            android:id="@+id/locationeditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Add Location"
+            fontPath="fonts/sfui.ttf" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingBottom="10dp"
+            android:textColor="#222222"
+            android:text="April 12"
+            android:textSize="30sp"
+            fontPath="fonts/sfui.ttf"
+            android:clickable="true"/>
+
+        <LinearLayout
+            android:id="@+id/timeeditText"
+            android:layout_width="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                fontPath="fonts/sfui.ttf"
+                android:textColor="#222222"
+                android:text="7:00"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <Button
+            android:id="@+id/addbutton"
+            android:text="Create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="30dp"
+            android:textAllCaps="false"
+            android:textSize="25sp"
+            fontPath="fonts/sfui.ttf"
+            android:padding="0dp"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            />
+
+
+
+
+
+</LinearLayout>

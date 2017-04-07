@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -27,16 +29,23 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -52,9 +61,9 @@ public class EventActivity extends AppCompatActivity {
 
     EditText eventNameEditText;
     EditText descriptionEditText;
-    EditText dateEditText;
-    EditText timeEditText;
-    EditText locationEditText;
+    TextView dateEditText;
+    TextView timeEditText;
+    TextView locationEditText;
 
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
@@ -72,10 +81,18 @@ public class EventActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
-        dateEditText = (EditText)findViewById(R.id.dateeditText);
-        timeEditText = (EditText)findViewById(R.id.timeeditText);
-        locationEditText = (EditText)findViewById(R.id.locationeditText);
+        dateEditText = (TextView) findViewById(R.id.date);
+        timeEditText = (TextView) findViewById(R.id.time);
+        locationEditText = (TextView) findViewById(R.id.locationeditText);
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/sfui.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
+        timeEditText.setText(new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()));
+        dateEditText.setText(new SimpleDateFormat("MMM dd, yyyy").format(Calendar.getInstance().getTime()));
 
         myCalendar = Calendar.getInstance();
 
@@ -150,8 +167,8 @@ public class EventActivity extends AppCompatActivity {
                 }
                 eventNameEditText = (EditText)findViewById(R.id.eventNameeditText);
                 descriptionEditText = (EditText)findViewById(R.id.descriptioneditText);
-                dateEditText = (EditText)findViewById(R.id.dateeditText);
-                timeEditText = (EditText)findViewById(R.id.timeeditText);
+                dateEditText = (TextView) findViewById(R.id.date);
+                timeEditText = (TextView) findViewById(R.id.time);
 
                 String eventNameString = eventNameEditText.getText().toString();
                 String descriptionString = descriptionEditText.getText().toString();
@@ -165,9 +182,9 @@ public class EventActivity extends AppCompatActivity {
                 progressDialog.setMessage("Creating Event");
                 progressDialog.show();
 
-                Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeLat, placeLng, peopleAttending);
+                final Event newEvent = new Event(eventNameString, descriptionString, dateString, timeString, placeName, placeLat, placeLng, peopleAttending);
 
-                String pushKey = myRef.child("Events").push().getKey();
+                final String pushKey = myRef.child("Events").push().getKey();
 
                 for(int i = 0; i < peopleAttending.size(); i++){
                     myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(peopleAttending.get(i));
@@ -177,6 +194,11 @@ public class EventActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(getApplicationContext(), EventDetailsActivity.class);
+                            i.putExtra("eventId", pushKey);
+                            i.putExtra("event", (new Gson()).toJson(newEvent));
+                            finish();
+                            startActivity(i);
                             progressDialog.dismiss();
                         }
                         else{
@@ -193,7 +215,7 @@ public class EventActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        locationEditText = (EditText)findViewById(R.id.locationeditText);
+        locationEditText = (TextView)findViewById(R.id.locationeditText);
 
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -209,8 +231,8 @@ public class EventActivity extends AppCompatActivity {
 
     private void updateLabel() {
 
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String myFormat = "MMM dd, yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         dateEditText.setText(sdf.format(myCalendar.getTime()));
     }
@@ -222,9 +244,9 @@ public class EventActivity extends AppCompatActivity {
 
         eventNameEditText = (EditText)findViewById(R.id.eventNameeditText);
         descriptionEditText = (EditText)findViewById(R.id.descriptioneditText);
-        dateEditText = (EditText)findViewById(R.id.dateeditText);
-        timeEditText = (EditText)findViewById(R.id.timeeditText);
-        locationEditText = (EditText)findViewById(R.id.locationeditText);
+        dateEditText = (TextView) findViewById(R.id.date);
+        timeEditText = (TextView) findViewById(R.id.time);
+        locationEditText = (TextView) findViewById(R.id.locationeditText);
 
         String eventNameString = eventNameEditText.getText().toString();
         String descriptionString = descriptionEditText.getText().toString();
@@ -276,5 +298,11 @@ public class EventActivity extends AppCompatActivity {
 
         return valid;
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 
 }

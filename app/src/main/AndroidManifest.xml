@@ -41,7 +41,8 @@
             android:label="Details" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".EventActivity" />
+        <activity android:name=".EventActivity"
+            android:label="Create Event"/>
         <activity android:name=".LoginActivity"
             android:label="Login">
             <intent-filter>
