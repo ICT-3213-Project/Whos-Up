@@ -111,7 +111,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public  void openSignIn(View v){
-        finish();
+        changeActivity();
+
     }
 
     public void createAccount(final String email, String password, final String shortBio){
@@ -282,9 +283,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void changeActivity()
     {
-        finish();
-        Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
+
+        Intent i = new Intent(SignUpActivity.this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 
     public void selectImage(View view){
