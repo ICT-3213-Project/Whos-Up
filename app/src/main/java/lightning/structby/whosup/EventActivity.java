@@ -186,9 +186,8 @@ public class EventActivity extends AppCompatActivity {
 
                 final String pushKey = myRef.child("Events").push().getKey();
 
-                for(int i = 0; i < peopleAttending.size(); i++){
-                    myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(peopleAttending.get(i));
-                }
+                myRef.child("Events").child(pushKey).child("peopleAttending").push().setValue(peopleAttending);
+
                 myRef.child("Events").child(pushKey).setValue(newEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
