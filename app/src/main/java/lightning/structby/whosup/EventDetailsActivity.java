@@ -66,6 +66,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         // Get our event
         eventId = getIntent().getStringExtra("eventId");
 
+        LinearLayout ll = (LinearLayout) findViewById(R.id.chatLayout);
+        ll.setVisibility(View.INVISIBLE);
         // Get catched event
         populateCachedEvent();
 

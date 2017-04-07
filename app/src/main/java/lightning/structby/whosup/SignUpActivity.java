@@ -286,12 +286,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void changeActivity()
     {
-        Intent mStartActivity = new Intent(SignUpActivity.this, MainActivity.class);
-        int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(SignUpActivity.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager)SignUpActivity.this.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
+//        Intent mStartActivity = new Intent(SignUpActivity.this, MainActivity.class);
+//        int mPendingIntentId = 123456;
+//        PendingIntent mPendingIntent = PendingIntent.getActivity(SignUpActivity.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+//        AlarmManager mgr = (AlarmManager)SignUpActivity.this.getSystemService(Context.ALARM_SERVICE);
+//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+//        System.exit(0);
+        finish();
+        Intent i = new Intent(SignUpActivity.this, MainActivity.class);
+        startActivity(i);
 
     }
 
