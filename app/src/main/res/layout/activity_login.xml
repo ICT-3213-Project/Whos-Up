@@ -100,7 +100,8 @@
             android:clickable="true"
             android:textSize="20sp"
             android:layout_gravity="center"
-            android:onClick="openSignUp"/>
+            android:onClick="openSignUp"
+            android:textColor="@color/colorPrimaryTeal"/>
 
     </LinearLayout>
 
