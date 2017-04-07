@@ -94,6 +94,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                         if(event.getPeopleAttending().containsKey(userId)){
                             tv = (TextView) findViewById(R.id.goingText);
                             tv.setText("Going");
+                            LinearLayout ll = (LinearLayout) findViewById(R.id.chatLayout);
+                            ll.setVisibility(View.VISIBLE);
                         }
                         getEventReference(event);
 
