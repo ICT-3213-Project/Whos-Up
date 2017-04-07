@@ -26,11 +26,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "LoginActivity";
     EditText emailEditText;
     EditText passwordEditText;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 //        Intent i = new Intent(this, EventDetailsActivity.class);
 //        startActivity(i);
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    changeActivity();
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    //Toast.makeText(getApplicationContext(),user.toString(),Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-                // ...
-            }
-        };
+
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/sfui.ttf")
@@ -67,18 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
     public void login(View view){
@@ -153,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
 //        intent.putExtra("userId", emailEditText.getText().toString());
 //        startActivity(intent);
 
-        Intent i = new Intent(this, DevNavigation.class);
+        Intent i = new Intent(this, MapsActivity.class);
         startActivity(i);
     }
 
