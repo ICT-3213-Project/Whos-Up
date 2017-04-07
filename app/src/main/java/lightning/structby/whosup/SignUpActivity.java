@@ -283,8 +283,6 @@ public class SignUpActivity extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
     }
 
     public void selectImage(View view){
