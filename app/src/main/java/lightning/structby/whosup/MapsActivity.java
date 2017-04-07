@@ -107,10 +107,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
 
 
-//        if(!singleton){
-//            singleton = true;
-//            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-//        }
+        if(!singleton){
+            singleton = true;
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
         // Get signed in user
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());

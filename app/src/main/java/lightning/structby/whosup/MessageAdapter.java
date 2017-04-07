@@ -41,6 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<User> users;
     private Map<String, BitmapDrawable> profilePictures;
     private Map<String, Integer> waitForevent;
+    private Map<String, List<Integer>> leftList;
     private static boolean singleton = false;
 
     public MessageAdapter(List<Message> messages, Context context, String userId) {
@@ -50,6 +51,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         users = new ArrayList<>();
         profilePictures = new HashMap<>();
         waitForevent = new HashMap<>();
+        leftList = new HashMap<>();
 
     }
 
@@ -84,7 +86,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 rvh.roundedImageView.setBackground(dp);
             }
             else if(waitForevent.get(message.getSenderId()) == null){
-                waitForevent.put(message.getSenderId(), position);
+//                waitForevent.put(message.getSenderId(), position);
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
                 Query query = reference.orderByKey().equalTo(message.getSenderId()).limitToFirst(1);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -99,7 +101,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 BitmapDrawable dp = new BitmapDrawable(context.getResources(), bmp);
                                 profilePictures.put(ds.getKey(), dp);
                                 users.add(user);
-                                waitForevent.remove(ds.getKey());
+//                                waitForevent.remove(ds.getKey());
                                 notifyItemChanged(position);
                             }
                         }
