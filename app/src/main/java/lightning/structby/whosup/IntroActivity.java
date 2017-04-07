@@ -31,7 +31,7 @@ public class IntroActivity extends AppIntro {
 //        setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
-        showSkipButton(true);
+        showSkipButton(false);
         setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
