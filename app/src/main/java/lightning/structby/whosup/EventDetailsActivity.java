@@ -321,13 +321,16 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
 
     public void joinEvent(View v){
         TextView tv = (TextView) findViewById(R.id.goingText);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.chatLayout);
         if(event.getPeopleAttending().containsKey(userId)){
             event.removePerson(userId);
             tv.setText("Join");
+            ll.setVisibility(View.INVISIBLE);
         }
         else{
             tv.setText("Going");
             event.addPerson(userId);
+            ll.setVisibility(View.VISIBLE);
         }
 
         Map<String, Object> map = new HashMap<>();
