@@ -178,8 +178,9 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"
+                    android:background="#B2DFDB"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@android:color/white"
+                    app:riv_mutate_background="true"
                     android:clickable="true"
                     android:onClick="joinEvent">
                     <RelativeLayout
@@ -192,6 +193,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+
                             android:layout_alignParentBottom="true"
                             android:orientation="vertical">
                             <TextView
@@ -201,7 +203,7 @@
                                 android:text="event"
                                 android:textSize="25sp"
                                 android:textStyle="bold"
-                                android:textColor="@android:color/darker_gray"
+                                android:textColor="#333333"
                                 android:gravity="left"/>
 
                             <TextView
@@ -211,8 +213,8 @@
                                 android:text="Join"
                                 android:layout_marginLeft="3dp"
                                 android:textSize="16sp"
+                                android:textColor="#333333"
                                 fontPath="fonts/sfui.ttf"
-                                android:textColor="@android:color/darker_gray"
                                 android:gravity="left|bottom"/>
                         </LinearLayout>
 
@@ -228,7 +230,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="5dp"
-                    app:cardBackgroundColor="@android:color/holo_green_light">
+                    app:cardBackgroundColor="#00897B">
                     <RelativeLayout
                         android:id="@+id/peopleCount"
                         android:layout_width="match_parent"
@@ -273,10 +275,12 @@
     </LinearLayout>
     </ScrollView>
     <LinearLayout
+        android:id="@+id/chatLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@android:color/holo_orange_dark"
+        android:background="#009688"
         android:layout_weight="0"
+        android:elevation="5dp"
         android:onClick="openChat">
         <TextView
             android:layout_width="match_parent"

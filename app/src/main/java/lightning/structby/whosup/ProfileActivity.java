@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class ProfileActivity extends AppCompatActivity {
 
     EditText name, shortBio;
@@ -63,6 +65,12 @@ public class ProfileActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.user_profile_name);
         shortBio = (EditText) findViewById(R.id.user_profile_short_bio);
         profileImage = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.user_profile_image);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/sfui.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
 
         // If not user profile
         if(!profileId.equals(firebaseUser.getUid())) {
