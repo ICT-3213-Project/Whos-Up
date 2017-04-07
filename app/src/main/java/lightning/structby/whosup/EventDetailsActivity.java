@@ -1,13 +1,11 @@
 package lightning.structby.whosup;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.CardView;
@@ -18,25 +16,13 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.*;
-import android.view.GestureDetector;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -172,6 +158,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         personAttendingImage.setImageBitmap(decodedByte);
                         personAttendingImage.setVisibility(View.VISIBLE);
+
+                        setProfileListeners(R.id.people1, dataSnapshot.getKey());
                     }
                 }
 
@@ -201,6 +189,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         personAttendingImage.setImageBitmap(decodedByte);
                         personAttendingImage.setVisibility(View.VISIBLE);
+
+                        setProfileListeners(R.id.people2, dataSnapshot.getKey());
                     }
 
                 }
@@ -233,6 +223,8 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         personAttendingImage.setImageBitmap(decodedByte);
                         personAttendingImage.setVisibility(View.VISIBLE);
+
+                        setProfileListeners(R.id.people3, dataSnapshot.getKey());
                     }
 
                 }
@@ -247,6 +239,21 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
             RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people3);
             personAttendingImage.setVisibility(View.INVISIBLE);
         }
+
+    }
+
+    private void setProfileListeners(int viewId, final String key) {
+        final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(viewId);
+        personAttendingImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EventDetailsActivity.this, ProfileActivity.class);
+                i.putExtra("profileId", key);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     private void populateCachedEvent() {

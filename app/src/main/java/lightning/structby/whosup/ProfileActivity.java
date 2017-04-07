@@ -49,16 +49,27 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Show in
+        String profileId = getIntent().getStringExtra("profileId");
 
         database = FirebaseDatabase.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        userRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(profileId);
 
         progressDialog = new ProgressDialog(ProfileActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Retrieving");
         progressDialog.show();
+
+        name = (EditText) findViewById(R.id.user_profile_name);
+        shortBio = (EditText) findViewById(R.id.user_profile_short_bio);
+        profileImage = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.user_profile_image);
+
+        // If not user profile
+        if(!profileId.equals(firebaseUser.getUid())) {
+            name.setEnabled(false);
+            shortBio.setEnabled(false);
+            profileImage.setEnabled(false);
+        }
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -74,10 +85,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        name = (EditText) findViewById(R.id.user_profile_name);
-        shortBio = (EditText) findViewById(R.id.user_profile_short_bio);
-        profileImage = (com.makeramen.roundedimageview.RoundedImageView) findViewById(R.id.user_profile_image);
 
         name.addTextChangedListener(new TextWatcher() {
             @Override
