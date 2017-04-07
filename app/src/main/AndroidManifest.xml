@@ -42,7 +42,8 @@
             android:name=".EventDetailsActivity"
             android:label="Details" />
         <activity android:name=".ChatActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileActivity"
+            android:label="Profile"/>
         <activity android:name=".EventActivity"
             android:label="Create Event"/>
         <activity
