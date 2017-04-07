@@ -188,7 +188,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         if(event.getPeopleAttendingCount() >= 2) {
             final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people2);
             List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
-            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(1));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {
@@ -220,7 +220,7 @@ public class EventDetailsActivity extends AppCompatActivity implements setEvent{
         if(event.getPeopleAttendingCount() >= 3) {
             final RoundedImageView personAttendingImage = (RoundedImageView) findViewById(R.id.people3);
             List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
-            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(2));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {

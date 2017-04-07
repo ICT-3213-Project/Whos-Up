@@ -61,7 +61,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-//TODO: Don't show events which are behind in time
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -473,7 +472,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(event.getPeopleAttendingCount() >= 2) {
             final RoundedImageView personAttendingImage = (RoundedImageView) cardView.findViewById(R.id.people2);
             List<String> peopleAttendingKeys = new ArrayList<>(event.getPeopleAttending().keySet());
-            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(0));
+            String uid = event.getPeopleAttending().get(peopleAttendingKeys.get(1));
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
 
             userRef.addValueEventListener(new ValueEventListener() {
