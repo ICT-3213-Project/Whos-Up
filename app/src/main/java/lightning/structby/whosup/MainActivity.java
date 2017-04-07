@@ -72,12 +72,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
+        if(mAuth != null) {
+            mAuth.addAuthStateListener(mAuthListener);
+        }
+
     }
 
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+        if (mAuth != null && mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
