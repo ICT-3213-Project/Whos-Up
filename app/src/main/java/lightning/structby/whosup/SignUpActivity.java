@@ -283,6 +283,8 @@ public class SignUpActivity extends AppCompatActivity {
     private void changeActivity()
     {
         finish();
+        Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(i);
     }
 
     public void selectImage(View view){

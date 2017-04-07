@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
             //  Apply changes
             e.apply();
+            finish();
         } else {
             mAuth = FirebaseAuth.getInstance();
 
@@ -53,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         // User is signed in
+                        finish();
                         Intent i = new Intent(MainActivity.this, MapsActivity.class);
                         startActivity(i);
                         Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     } else {
                         // User is signed out
+                        finish();
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(i);
                         Log.d(TAG, "onAuthStateChanged:signed_out");
