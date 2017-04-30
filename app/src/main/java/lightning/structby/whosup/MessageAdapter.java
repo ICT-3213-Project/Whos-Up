@@ -26,7 +26,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +40,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String userId;
     private List<User> users;
     private Map<String, BitmapDrawable> profilePictures;
-    private Map<Integer, String> leftPositions;
     private Map<String, Integer> waitForevent;
+    private Map<String, List<Integer>> leftList;
     private static boolean singleton = false;
 
     public MessageAdapter(List<Message> messages, Context context, String userId) {
@@ -52,7 +51,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         users = new ArrayList<>();
         profilePictures = new HashMap<>();
         waitForevent = new HashMap<>();
-        leftPositions = new HashMap<>();
+        leftList = new HashMap<>();
 
     }
 
@@ -87,8 +86,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 rvh.roundedImageView.setBackground(dp);
             }
             else if(waitForevent.get(message.getSenderId()) == null){
-                leftPositions.put(position, message.getSenderId());
-                waitForevent.put(message.getSenderId(), position);
+//                waitForevent.put(message.getSenderId(), position);
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
                 Query query = reference.orderByKey().equalTo(message.getSenderId()).limitToFirst(1);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -103,16 +101,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 BitmapDrawable dp = new BitmapDrawable(context.getResources(), bmp);
                                 profilePictures.put(ds.getKey(), dp);
                                 users.add(user);
-                                for(Integer i : leftPositions.keySet()){
-                                    Log.d("vv", "seee");
-                                    if(leftPositions.get(i).equals(ds.getKey())){
-                                        notifyItemChanged(i);
-                                        Log.d("vviii", "seeeooo");
-                                    }
-                                }
-
-                                waitForevent.remove(ds.getKey());
-                                //notifyItemChanged(position);
+//                                waitForevent.remove(ds.getKey());
+                                notifyItemChanged(position);
                             }
                         }
                     }
@@ -143,7 +133,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static class ReceiverViewHolder extends RecyclerView.ViewHolder{
 
         TextView textViewMessage;
-//        ImageView roundedImageView;
+        //        ImageView roundedImageView;
         RoundedImageView roundedImageView;
 
 

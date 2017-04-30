@@ -22,16 +22,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+
         //  Initialize SharedPreferences
         SharedPreferences getPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
+
+
 
         //  Create a new boolean and preference and set it to true
         boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
         //  If the activity has never started before...
         if (isFirstStart) {
-
+            finish();
             //  Launch app intro
             Intent i = new Intent(MainActivity.this, IntroActivity.class);
             startActivity(i);
@@ -44,20 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
             //  Apply changes
             e.apply();
-        } else {
-            mAuth = FirebaseAuth.getInstance();
 
+        } else {
             mAuthListener = new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
                         // User is signed in
+                        finish();
                         Intent i = new Intent(MainActivity.this, MapsActivity.class);
                         startActivity(i);
                         Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     } else {
                         // User is signed out
+                        finish();
                         Intent i = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(i);
                         Log.d(TAG, "onAuthStateChanged:signed_out");

@@ -1,5 +1,7 @@
 package lightning.structby.whosup;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -112,6 +114,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     public  void openSignIn(View v){
         finish();
+        Intent i = new Intent(SignUpActivity.this, MainActivity.class);
+        startActivity(i);
     }
 
     public void createAccount(final String email, String password, final String shortBio){
@@ -181,7 +185,16 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
 
                                     if(task.isSuccessful()){
-                                        //Toast.makeText(context,"Successful",Toast.LENGTH_LONG).show();
+                                        progressDialog.dismiss();
+                                        builder1.setTitle("Congratulations!");
+                                        builder1.setMessage("Your account has been registered successfully.");
+                                        builder1.setPositiveButton(android.R.string.ok,
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        changeActivity();
+                                                    }
+                                                }).create().show();
                                     }
                                     else{
                                         //Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
@@ -189,16 +202,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
 
-                            progressDialog.dismiss();
-                            builder1.setTitle("Congratulations!");
-                            builder1.setMessage("Your account has been registered successfully.");
-                            builder1.setPositiveButton(android.R.string.ok,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            changeActivity();
-                                        }
-                                    }).create().show();
+
                         }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -282,9 +286,16 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void changeActivity()
     {
+//        Intent mStartActivity = new Intent(SignUpActivity.this, MainActivity.class);
+//        int mPendingIntentId = 123456;
+//        PendingIntent mPendingIntent = PendingIntent.getActivity(SignUpActivity.this, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+//        AlarmManager mgr = (AlarmManager)SignUpActivity.this.getSystemService(Context.ALARM_SERVICE);
+//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+//        System.exit(0);
         finish();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        Intent i = new Intent(SignUpActivity.this, MainActivity.class);
+        startActivity(i);
+
     }
 
     public void selectImage(View view){
