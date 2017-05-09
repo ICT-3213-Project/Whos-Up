@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
@@ -33,9 +34,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Message> messages;
     private Context context;
     private String userId;
-    private List<User> users;
+    //private List<User> users;
     private Map<String, BitmapDrawable> profilePictures;
-    private Map<String, Integer> waitForEvent;
     private Map<String, List<Integer>> leftList;
     private static boolean singleton = false;
 
@@ -43,9 +43,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.messages = messages;
         this.context = context;
         this.userId = userId;
-        users = new ArrayList<>();
+        //users = new ArrayList<>();
         profilePictures = new HashMap<>();
-        waitForEvent = new HashMap<>();
         leftList = new HashMap<>();
 
     }
@@ -74,6 +73,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         else{
             ReceiverViewHolder rvh = (ReceiverViewHolder) holder;
             rvh.textViewMessage.setText(message.getMessage());
+            boolean nextMessageHasSameSender = position + 1 < messages.size() &&
+                    messages.get(position + 1).getSenderId().equals(message.getSenderId());
+            if(nextMessageHasSameSender) {
+                rvh.roundedImageView.setBackgroundColor(Color.TRANSPARENT);
+                return;
+            }
             BitmapDrawable dp = profilePictures.get(message.getSenderId());
             if(dp != null){
                 rvh.roundedImageView.setBackground(dp);
@@ -111,7 +116,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Log.d("SEE", "Received");
                 BitmapDrawable dp = getBitmapFromString(user.getProfileImage());
                 profilePictures.put(ds.getKey(), dp);
-                users.add(user);
+                //users.add(user);
                 callbackForUserAdded(ds.getKey());
             }
         }
