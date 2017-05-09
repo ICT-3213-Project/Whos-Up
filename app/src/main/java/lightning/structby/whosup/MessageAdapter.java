@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +59,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
 
         if(viewType == 1) {
             View v = LayoutInflater.from(parent.getContext())
@@ -129,6 +132,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return 1;
         return 0;
     }
+
+
+
 
     public static class ReceiverViewHolder extends RecyclerView.ViewHolder{
 

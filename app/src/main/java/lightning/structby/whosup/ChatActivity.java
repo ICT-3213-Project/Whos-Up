@@ -32,7 +32,7 @@ import java.util.Map;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements ChildEventListener {
 
     private String eventId;
     private String userId;
@@ -40,97 +40,109 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<Message> messages;
-    EditText et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Button tv = (Button) findViewById(R.id.sendButton);
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
-        tv.setTypeface(face);
+        setUpFonts();
+        getIntentData();
+
+        messages = new ArrayList<>();
+        adapter = new MessageAdapter(messages, this, userId);
+
+        setRecyclerView();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Message");
+        Query query=databaseReference.orderByChild("eventId").equalTo(eventId);
+        query.addChildEventListener(this);
+
+    }
 
 
-
+    private void getIntentData(){
         userId = getIntent().getStringExtra("userId");
         eventId = getIntent().getStringExtra("eventId");
         String eventName = getIntent().getStringExtra("eventName");
         getSupportActionBar().setTitle(eventName);
+    }
 
+    private void setRecyclerView(){
         recyclerView = (RecyclerView) findViewById(R.id.message);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        messages = new ArrayList<>();
-        adapter = new MessageAdapter(messages, this, userId);
         recyclerView.setAdapter(adapter);
+    }
 
+    private void setUpFonts(){
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/sfui.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Message");
-        Query query=databaseReference.orderByChild("eventId").equalTo(eventId);
-
-        query.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Message m = dataSnapshot.getValue(Message.class);
-                String senderId = m.getSenderId();
-                if (senderId != userId) {
-                    messages.add(m);
-                    adapter.notifyItemInserted(messages.size() - 1);
-                    recyclerView.scrollToPosition(messages.size() - 1);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        Button button = (Button) findViewById(R.id.sendButton);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/MaterialIcons-Regular.ttf");
+        button.setTypeface(face);
     }
 
     public void sendMessage(View v) {
         Date now = new Date();
-        et = (EditText) findViewById(R.id.userMessage);
-        String message = et.getText().toString().trim();
-        if (message.equals(""))
+
+        EditText editText = (EditText) findViewById(R.id.userMessage);
+        String messageText = editText.getText().toString().trim();
+
+        if (messageText.equals(""))
             return;
-        Message m = new Message(message, userId, eventId, now, "");
-        et.setText("");
-        messages.add(m);
+
+        Message message = new Message(messageText, userId, eventId, now, "");
+        editText.setText("");
+        messages.add(message);
         adapter.notifyItemInserted(messages.size() - 1);
         recyclerView.scrollToPosition(messages.size() - 1);
 
+        //TODO: Offline message sending
         String key = databaseReference.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/" + key, m);
+        childUpdates.put("/" + key, message);
         databaseReference.updateChildren(childUpdates);
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        Message m = dataSnapshot.getValue(Message.class);
+        String senderId = m.getSenderId();
+        if (senderId != userId) {
+            messages.add(m);
+            adapter.notifyItemInserted(messages.size() - 1);
+            recyclerView.scrollToPosition(messages.size() - 1);
+        }
+    }
+
+    @Override
+    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+    }
+
+    @Override
+    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 
 }
