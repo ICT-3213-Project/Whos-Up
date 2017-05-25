@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -102,7 +104,6 @@ public class ChatActivity extends AppCompatActivity implements ChildEventListene
         adapter.notifyItemInserted(messages.size() - 1);
         recyclerView.scrollToPosition(messages.size() - 1);
 
-        //TODO: Offline message sending
         String key = databaseReference.push().getKey();
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + key, message);
@@ -122,7 +123,25 @@ public class ChatActivity extends AppCompatActivity implements ChildEventListene
             messages.add(m);
             adapter.notifyItemInserted(messages.size() - 1);
             recyclerView.scrollToPosition(messages.size() - 1);
+
+
         }
+        ViewGroup.MarginLayoutParams vm = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
+        Log.e("ii", vm.toString() +"");
+        RecyclerView.ViewHolder vg = recyclerView.findViewHolderForAdapterPosition(messages.size() - 1);
+        View v = vg.itemView;
+        RecyclerView.MarginLayoutParams rp =(RecyclerView.MarginLayoutParams) v.getLayoutParams();
+
+        rp.setMargins(5,5,5,100);
+        recyclerView.setLayoutParams(vm);
+//        View v = recyclerView.findViewHolderForAdapterPosition(1).itemView;
+////        v.findViewById(R.id.messageLayout);
+//        if(v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+//            Log.d("sss", "ssssssssss");
+//        } else {
+//            Log.d("sss", "oooooooooo");
+//        }
+
     }
 
     @Override

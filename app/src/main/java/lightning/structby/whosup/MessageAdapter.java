@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +36,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Message> messages;
     private Context context;
     private String userId;
-    //private List<User> users;
     private Map<String, BitmapDrawable> profilePictures;
     private Map<String, List<Integer>> leftList;
     private static boolean singleton = false;
@@ -43,7 +44,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.messages = messages;
         this.context = context;
         this.userId = userId;
-        //users = new ArrayList<>();
         profilePictures = new HashMap<>();
         leftList = new HashMap<>();
 
@@ -69,6 +69,21 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if(holder.getItemViewType() == 1){
             SenderViewHolder svh = (SenderViewHolder) holder;
             svh.textViewMessage.setText(message.getMessage());
+//
+//            RecyclerView.LayoutManager llm = new RecyclerView.LayoutManager(co);
+//
+//            View v = llm.findViewByPosition(position); //llm.getChildAt(position);
+//            Log.d("rv", v.toString() + "");
+//            RecyclerView.LayoutParams rv = (RecyclerView.LayoutParams) v.getLayoutParams();
+//            Log.d("rv", rv.toString() + "");
+//            rv.setMargins(0,0,0,0);
+////            v
+////            if(v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+////                Log.d("llll", "jjjjjjjjj");
+////            } else {
+////                Log.d("llll", "ooooooooooo");
+////            }
+
         }
         else{
             ReceiverViewHolder rvh = (ReceiverViewHolder) holder;
@@ -79,6 +94,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 rvh.roundedImageView.setBackgroundColor(Color.TRANSPARENT);
                 return;
             }
+
             BitmapDrawable dp = profilePictures.get(message.getSenderId());
             if(dp != null){
                 rvh.roundedImageView.setBackground(dp);
@@ -116,7 +132,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Log.d("SEE", "Received");
                 BitmapDrawable dp = getBitmapFromString(user.getProfileImage());
                 profilePictures.put(ds.getKey(), dp);
-                //users.add(user);
                 callbackForUserAdded(ds.getKey());
             }
         }
