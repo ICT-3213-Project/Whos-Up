@@ -12,20 +12,29 @@ public class Message {
 
     private String eventId;
     private String senderId;
-    private Date date;
+    private String date;
+    private String time;
     private String message;
     private String mediaUrl;
 
     public Message(){}
 
-    public Message(String message, String senderId, String eventId, Date date, String mediaUrl){
+    public Message(String message, String senderId, String eventId, String date, String time, String mediaUrl){
         this.message = message;
         this.date = date;
         this.senderId = senderId;
         this.mediaUrl = mediaUrl;
         this.eventId = eventId;
+        this.time = time;
     }
 
+    public String getDate() { return date; }
+
+    public void setDate(String date) { this.date = date; }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
 
     public String getEventId() { return eventId; }
 
@@ -47,6 +56,7 @@ public class Message {
         HashMap<String, Object> result = new HashMap<>();
         result.put("eventId", eventId);
         result.put("date", date);
+        result.put("time", time);
         result.put("senderId", senderId);
         result.put("mediaUrl", mediaUrl);
         result.put("message", message);

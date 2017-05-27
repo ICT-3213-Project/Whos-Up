@@ -66,33 +66,30 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         Message message = messages.get(position);
+        boolean nextMessageHasSameSender = position + 1 < messages.size() &&
+                messages.get(position + 1).getSenderId().equals(message.getSenderId());
+        boolean previousMessageHasSameSender = position - 1 >= 0 &&
+                messages.get(position - 1).getSenderId().equals(message.getSenderId());
+
         if(holder.getItemViewType() == 1){
             SenderViewHolder svh = (SenderViewHolder) holder;
             svh.textViewMessage.setText(message.getMessage());
-//
-//            RecyclerView.LayoutManager llm = new RecyclerView.LayoutManager(co);
-//
-//            View v = llm.findViewByPosition(position); //llm.getChildAt(position);
-//            Log.d("rv", v.toString() + "");
-//            RecyclerView.LayoutParams rv = (RecyclerView.LayoutParams) v.getLayoutParams();
-//            Log.d("rv", rv.toString() + "");
-//            rv.setMargins(0,0,0,0);
-////            v
-////            if(v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-////                Log.d("llll", "jjjjjjjjj");
-////            } else {
-////                Log.d("llll", "ooooooooooo");
-////            }
-
+            if (nextMessageHasSameSender) {
+                svh.alterLayoutForNextMessage();
+            }
+            if (previousMessageHasSameSender) {
+                svh.alterLayoutForPreviousMessage();
+            }
         }
         else{
             ReceiverViewHolder rvh = (ReceiverViewHolder) holder;
             rvh.textViewMessage.setText(message.getMessage());
-            boolean nextMessageHasSameSender = position + 1 < messages.size() &&
-                    messages.get(position + 1).getSenderId().equals(message.getSenderId());
-            if(nextMessageHasSameSender) {
-                rvh.roundedImageView.setBackgroundColor(Color.TRANSPARENT);
-                return;
+
+            if (nextMessageHasSameSender) {
+                rvh.alterLayoutForNextMessage();
+            }
+            if (previousMessageHasSameSender) {
+                rvh.alterLayoutForPreviousMessage();
             }
 
             BitmapDrawable dp = profilePictures.get(message.getSenderId());

@@ -25,7 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +93,8 @@ public class ChatActivity extends AppCompatActivity implements ChildEventListene
 
     public void sendMessage(View v) {
         Date now = new Date();
+        String date = new SimpleDateFormat("HH:mm").format(now);
+        String time = new SimpleDateFormat("MMM dd, yyyy").format(now);
 
         EditText editText = (EditText) findViewById(R.id.userMessage);
         String messageText = editText.getText().toString().trim();
@@ -98,7 +102,7 @@ public class ChatActivity extends AppCompatActivity implements ChildEventListene
         if (messageText.equals(""))
             return;
 
-        Message message = new Message(messageText, userId, eventId, now, "");
+        Message message = new Message(messageText, userId, eventId, date, time, "");
         editText.setText("");
         messages.add(message);
         adapter.notifyItemInserted(messages.size() - 1);
@@ -126,21 +130,7 @@ public class ChatActivity extends AppCompatActivity implements ChildEventListene
 
 
         }
-        ViewGroup.MarginLayoutParams vm = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
-        Log.e("ii", vm.toString() +"");
-        RecyclerView.ViewHolder vg = recyclerView.findViewHolderForAdapterPosition(messages.size() - 1);
-        View v = vg.itemView;
-        RecyclerView.MarginLayoutParams rp =(RecyclerView.MarginLayoutParams) v.getLayoutParams();
 
-        rp.setMargins(5,5,5,100);
-        recyclerView.setLayoutParams(vm);
-//        View v = recyclerView.findViewHolderForAdapterPosition(1).itemView;
-////        v.findViewById(R.id.messageLayout);
-//        if(v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-//            Log.d("sss", "ssssssssss");
-//        } else {
-//            Log.d("sss", "oooooooooo");
-//        }
 
     }
 
