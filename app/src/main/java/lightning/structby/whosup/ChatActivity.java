@@ -93,8 +93,8 @@ public class ChatActivity extends AppCompatActivity implements ChildEventListene
 
     public void sendMessage(View v) {
         Date now = new Date();
-        String date = new SimpleDateFormat("HH:mm").format(now);
-        String time = new SimpleDateFormat("MMM dd, yyyy").format(now);
+        String time = new SimpleDateFormat("HH:mm").format(now);
+        String date = new SimpleDateFormat("MMM dd, yyyy").format(now);
 
         EditText editText = (EditText) findViewById(R.id.userMessage);
         String messageText = editText.getText().toString().trim();

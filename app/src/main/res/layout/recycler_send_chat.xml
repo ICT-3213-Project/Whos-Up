@@ -3,29 +3,46 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="rtl"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2.5dp"
+    android:layout_marginBottom="2.5dp"
     android:layout_marginRight="10dp"
     android:id="@+id/sendMessageLayout">
 
-
-    <TextView
-        android:id="@+id/messageId"
+    <LinearLayout
+        android:id="@+id/messageContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:elevation="1dp"
-        android:layout_marginBottom="1dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        fontPath="fonts/sfui.ttf"
-        android:minHeight="40dp"
-        android:gravity="center_vertical|left"
-        android:layout_marginLeft="50dp"
+        android:orientation="vertical"
         android:background="@drawable/send_message"
-        android:textDirection="ltr"
-        android:text="Hello, world! This is Vinayak. This is a very long text just to text what happens to long texts."
-        android:textSize="18sp" />
+        android:minHeight="45dp"
+        android:paddingBottom="1dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp"
+        fontPath="fonts/sfui.ttf"
+        android:layout_marginLeft="50dp">
+
+        <TextView
+            android:id="@+id/messageId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#444444"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_vertical|left"
+            android:textDirection="ltr"
+            android:text="Hello, world! This is Vinayak. This is a very long text just to text what happens to long texts."
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5px"
+            android:text="2:30"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:textDirection="rtl"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

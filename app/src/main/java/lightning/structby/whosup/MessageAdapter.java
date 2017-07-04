@@ -74,6 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if(holder.getItemViewType() == 1){
             SenderViewHolder svh = (SenderViewHolder) holder;
             svh.textViewMessage.setText(message.getMessage());
+            svh.time.setText(message.getTime());
             if (nextMessageHasSameSender) {
                 svh.alterLayoutForNextMessage();
             }
